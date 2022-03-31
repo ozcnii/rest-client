@@ -1,0 +1,27 @@
+{
+  "name": "rest-client",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vite preview",
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "prismjs": "^1.27.0",
+    "vue": "^3.2.25",
+    "vue-prism-component": "^2.0.0",
+    "vue-router": "^4.0.14",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.0",
+    "@vuetify/vite-plugin": "^1.0.0-alpha.0",
+    "autoprefixer": "^10.4.4",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.23",
+    "vite": "^2.8.0"
+  }
+}
