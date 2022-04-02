@@ -24,12 +24,17 @@ export default defineComponent({
   },
   beforeMount() {
     const params = JSON.parse(localStorage.getItem("params"));
+    const headers = JSON.parse(localStorage.getItem("headers"));
     if (params) {
       this.setParams(params);
+    }
+    if (headers) {
+      this.setHeaders(headers);
     }
   },
   methods: {
     ...mapMutations(["setParams"]),
+    ...mapMutations(["setHeaders"]),
   },
 });
 </script>

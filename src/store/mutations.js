@@ -30,4 +30,7 @@ export const mutations = {
   setParams(state, params) {
     state.options.params = params;
   },
+  setHeaders(state, headers) {
+    state.options.headers = headers;
+  },
 };

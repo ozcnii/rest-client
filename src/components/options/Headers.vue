@@ -1,17 +1,21 @@
-<!-- <template>
+<template>
   <div class="flex grow flex-col gap-3">
-    <Button @click="addQuery"> add headers </Button>
+    <Button @click="addHeader"> add headers </Button>
 
-    <div v-if="!queries?.length" class="flex justify-center">No headers</div>
+    <div v-if="!headers?.length" class="flex justify-center">No headers</div>
 
     <div class="relative overflow-y-auto h-full w-full">
-      <div class="query-list-wrapper">
+      <div class="list-wrapper">
         <div class="flex flex-col gap-3 items-center">
-          <div v-for="query in queries" :key="query.id">
+          <div v-for="header in headers" :key="header.id">
             <div class="flex gap-3 px-2">
-              <Input class="w-5/12" placeholder="key" v-model="query.key" />
-              <Input class="w-6/12" placeholder="value" v-model="query.value" />
-              <Button class="min-w-2/12" @click="deleteQuery(query.id)"
+              <Input class="w-5/12" placeholder="header" v-model="header.key" />
+              <Input
+                class="w-6/12"
+                placeholder="value"
+                v-model="header.value"
+              />
+              <Button class="min-w-2/12" @click="deleteHeader(header.id)"
                 >x</Button
               >
             </div>
@@ -37,62 +41,57 @@ export default defineComponent({
 
   data() {
     return {
-      queries: [],
+      headers: [],
     };
   },
 
   beforeMount() {
-    const queries = this.getQueries;
-    if (queries) {
-      this.queries = queries;
+    const headers = this.getHeaders;
+    if (headers) {
+      this.headers = headers;
     }
   },
 
   methods: {
-    addQuery() {
-      this.queries.push({
+    addHeader() {
+      this.headers.push({
         key: "",
         value: "",
         id: Date.now(),
       });
     },
 
-    deleteQuery(id) {
-      this.queries = this.queries.filter((query) => query.id !== id);
+    deleteHeader(id) {
+      this.headers = this.headers.filter((header) => header.id !== id);
     },
-    saveQueries() {
-      this.setQueries(this.queries);
-      localStorage.setItem("queries", JSON.stringify(this.queries));
+    saveHeaders() {
+      this.setHeaders(this.headers);
+      localStorage.setItem("headers", JSON.stringify(this.headers));
     },
 
-    ...mapMutations(["setQueries"]),
+    ...mapMutations(["setHeaders"]),
   },
 
   watch: {
-    queries: {
+    headers: {
       handler() {
-        this.saveQueries();
+        this.saveHeaders();
       },
       deep: true,
     },
   },
 
   computed: {
-    ...mapGetters(["getQueries"]),
+    ...mapGetters(["getHeaders"]),
   },
 });
 </script>
 
 <style scoped>
-.hr {
-  background-color: var(--border-color);
-  height: 2px;
-}
-
-.query-list-wrapper {
+.list-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
 }
-</style> -->
+</style>

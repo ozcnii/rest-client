@@ -20,3 +20,7 @@ body {
   --border-color: #262626;
 }
 
+.hr {
+  background-color: var(--border-color);
+  height: 2px;
+}

@@ -7,11 +7,11 @@
     </div>
 
     <div class="relative overflow-y-auto h-full w-full">
-      <div class="query-list-wrapper">
+      <div class="list-wrapper">
         <div class="flex flex-col gap-3 items-center">
           <div v-for="param in params" :key="param.id">
             <div class="flex gap-3 px-2">
-              <Input class="w-5/12" placeholder="key" v-model="param.key" />
+              <Input class="w-5/12" placeholder="param" v-model="param.key" />
               <Input class="w-6/12" placeholder="value" v-model="param.value" />
               <Button class="min-w-2/12" @click="deleteQueryParam(param.id)"
                 >x</Button
@@ -86,12 +86,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.hr {
-  background-color: var(--border-color);
-  height: 2px;
-}
-
-.query-list-wrapper {
+.list-wrapper {
   position: absolute;
   top: 0;
   left: 0;
