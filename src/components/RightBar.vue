@@ -31,7 +31,9 @@
       </div>
 
       <div class="result-item rounded-md p-3">
-        {{ error }}
+        <Prism language="javascript" class="prism rounded-md">
+          {{ error }}
+        </Prism>
       </div>
     </div>
 

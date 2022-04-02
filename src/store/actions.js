@@ -21,7 +21,11 @@ export const actions = {
         commit("setRequestResult", null);
 
         commit("setRequestTime", Date.now() - start);
-        commit("setError", e.response?.statusText || e.message);
+
+        commit(
+          "setError",
+          e.response?.data || e.response?.statusText || e.message
+        );
         commit("setStatusCode", e.response?.status || 9999);
       } finally {
         commit("setLoading", false);

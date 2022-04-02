@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
-    "@vuetify/vite-plugin": "^1.0.0-alpha.0",
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.23",
