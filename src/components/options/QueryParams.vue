@@ -1,19 +1,19 @@
 <template>
   <div class="flex grow flex-col gap-3">
-    <Button @click="addQuery"> add query </Button>
+    <Button @click="addQueryParam"> add query params </Button>
 
-    <div v-if="!queries?.length" class="flex justify-center">
+    <div v-if="!params?.length" class="flex justify-center">
       No query params
     </div>
 
     <div class="relative overflow-y-auto h-full w-full">
       <div class="query-list-wrapper">
         <div class="flex flex-col gap-3 items-center">
-          <div v-for="query in queries" :key="query.id">
+          <div v-for="param in params" :key="param.id">
             <div class="flex gap-3 px-2">
-              <Input class="w-5/12" placeholder="key" v-model="query.key" />
-              <Input class="w-6/12" placeholder="value" v-model="query.value" />
-              <Button class="min-w-2/12" @click="deleteQuery(query.id)"
+              <Input class="w-5/12" placeholder="key" v-model="param.key" />
+              <Input class="w-6/12" placeholder="value" v-model="param.value" />
+              <Button class="min-w-2/12" @click="deleteQueryParam(param.id)"
                 >x</Button
               >
             </div>
@@ -39,48 +39,48 @@ export default defineComponent({
 
   data() {
     return {
-      queries: [],
+      params: [],
     };
   },
 
   beforeMount() {
-    const queries = this.getQueries;
-    if (queries) {
-      this.queries = queries;
+    const params = this.getParams;
+    if (params) {
+      this.params = params;
     }
   },
 
   methods: {
-    addQuery() {
-      this.queries.push({
+    addQueryParam() {
+      this.params.push({
         key: "",
         value: "",
         id: Date.now(),
       });
     },
 
-    deleteQuery(id) {
-      this.queries = this.queries.filter((query) => query.id !== id);
+    deleteQueryParam(id) {
+      this.params = this.params.filter((param) => param.id !== id);
     },
-    saveQueries() {
-      this.setQueries(this.queries);
-      localStorage.setItem("queries", JSON.stringify(this.queries));
+    saveParams() {
+      this.setParams(this.params);
+      localStorage.setItem("params", JSON.stringify(this.params));
     },
 
-    ...mapMutations(["setQueries"]),
+    ...mapMutations(["setParams"]),
   },
 
   watch: {
-    queries: {
+    params: {
       handler() {
-        this.saveQueries();
+        this.saveParams();
       },
       deep: true,
     },
   },
 
   computed: {
-    ...mapGetters(["getQueries"]),
+    ...mapGetters(["getParams"]),
   },
 });
 </script>

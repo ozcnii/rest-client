@@ -5,7 +5,7 @@ export const fetchData = async (url, method, options) => {
   // const body = {};
   // const headers = {};
 
-  options.query.forEach((q) => {
+  options.params.forEach((q) => {
     params[q.key] = q.value;
   });
 

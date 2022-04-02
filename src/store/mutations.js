@@ -27,7 +27,7 @@ export const mutations = {
     state.error = error;
   },
 
-  setQueries(state, queries) {
-    state.options.query = queries;
+  setParams(state, params) {
+    state.options.params = params;
   },
 };

@@ -1,6 +1,6 @@
 export const getters = {
-  getQueries(state) {
-    return state.options.query;
+  getParams(state) {
+    return state.options.params;
   },
   getHeaders(state) {
     return state.options.headers;

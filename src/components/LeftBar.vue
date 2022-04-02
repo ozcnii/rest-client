@@ -35,8 +35,8 @@ export default defineComponent({
           link: "/body",
         },
         {
-          name: "Query",
-          link: "/query",
+          name: "Params",
+          link: "/params",
         },
         {
           name: "Headers",

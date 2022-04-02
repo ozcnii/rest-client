@@ -12,7 +12,7 @@ export const state = () => ({
   error: null,
 
   options: {
-    query: [],
+    params: [],
     headers: [],
     body: [],
   },

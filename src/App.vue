@@ -23,13 +23,13 @@ export default defineComponent({
     HeaderForm,
   },
   beforeMount() {
-    const queries = JSON.parse(localStorage.getItem("queries"));
-    if (queries) {
-      this.setQueries(queries);
+    const params = JSON.parse(localStorage.getItem("params"));
+    if (params) {
+      this.setParams(params);
     }
   },
   methods: {
-    ...mapMutations(["setQueries"]),
+    ...mapMutations(["setParams"]),
   },
 });
 </script>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import BodyVue from "../components/options/Body.vue";
 import HeadersVue from "../components/options/Headers.vue";
-import QueryVue from "../components/options/Query.vue";
+import QueryParamsVue from "../components/options/QueryParams.vue";
 
 const router = createRouter({
   routes: [
@@ -10,8 +10,8 @@ const router = createRouter({
       component: BodyVue,
     },
     {
-      path: "/query",
-      component: QueryVue,
+      path: "/params",
+      component: QueryParamsVue,
     },
     {
       path: "/headers",
