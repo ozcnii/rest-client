@@ -4,7 +4,7 @@
 
     <div class="mt-16 flex gap-3 grow">
       <splitpanes>
-        <pane min-size="20">
+        <pane max-size="0">
           <LeftBar />
         </pane>
         <pane min-size="20">
@@ -41,16 +41,22 @@ export default defineComponent({
   beforeMount() {
     const params = JSON.parse(localStorage.getItem("params"));
     const headers = JSON.parse(localStorage.getItem("headers"));
+    const body = JSON.parse(localStorage.getItem("body"));
+
     if (params) {
       this.setParams(params);
     }
+
     if (headers) {
       this.setHeaders(headers);
     }
+
+    if (body) {
+      this.setBody(body);
+    }
   },
   methods: {
-    ...mapMutations(["setParams"]),
-    ...mapMutations(["setHeaders"]),
+    ...mapMutations(["setParams", "setHeaders", "setBody"]),
   },
 });
 </script>

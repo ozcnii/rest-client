@@ -71,8 +71,8 @@ export default defineComponent({
 <style scoped>
 .prism {
   margin: 0;
+  background-color: var(--second-bg-color);
 }
-
 .result-item {
   background-color: var(--border-color);
 }

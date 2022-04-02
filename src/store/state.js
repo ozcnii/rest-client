@@ -1,8 +1,7 @@
 export const state = () => ({
   url: "",
   method: "GET",
-  // httpMethods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  httpMethods: ["GET", "POST"],
+  httpMethods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 
   requestResult: null,
   requestTime: null,
@@ -14,6 +13,6 @@ export const state = () => ({
   options: {
     params: [],
     headers: [],
-    body: [],
+    body: '{"a": "b"}',
   },
 });

@@ -25,7 +25,25 @@ body {
 }
 
 .splitpanes--vertical > .splitpanes__splitter {
-  min-width: 5px;
+  min-width: 6px;
   margin: 0 0.5rem;
-  background: var(--border-color);
+  background-color: var(--border-color);
+  border-radius: 1rem;
+}
+
+.splitpanes__splitter:hover,
+.splitpanes__splitter:active {
+  background-color: var(--main-color);
+}
+
+.splitpanes__pane {
+  display: flex;
+  flex-grow: 1;
+}
+
+.text-main {
+  color: var(--main-color);
+}
+.bg-main-color {
+  background-color: var(--main-color);
 }

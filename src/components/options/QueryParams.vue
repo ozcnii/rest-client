@@ -1,6 +1,8 @@
 <template>
   <div class="flex grow flex-col gap-3">
-    <Button @click="addQueryParam"> add query params </Button>
+    <Button @click="addQueryParam" class="bg-main-color">
+      add query params
+    </Button>
 
     <div v-if="!params?.length" class="flex justify-center">
       No query params
@@ -13,8 +15,10 @@
             <div class="flex gap-3 px-2">
               <Input class="w-5/12" placeholder="param" v-model="param.key" />
               <Input class="w-6/12" placeholder="value" v-model="param.value" />
-              <Button class="min-w-2/12" @click="deleteQueryParam(param.id)"
-                >x</Button
+              <Button
+                class="min-w-2/12 bg-main-color"
+                @click="deleteQueryParam(param.id)"
+                >✖</Button
               >
             </div>
             <div class="mt-3 hr" />

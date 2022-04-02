@@ -1,10 +1,10 @@
 <template>
   <div class="flex grow flex-col gap-3">
-    <Button @click="addHeader"> add headers </Button>
+    <Button @click="addHeader" class="bg-main-color"> add headers </Button>
 
     <div v-if="!headers?.length" class="flex justify-center">No headers</div>
 
-    <div class="relative overflow-y-auto h-full w-full">
+    <div class="relative overflow-y-auto h-full w-full flex grow">
       <div class="list-wrapper">
         <div class="flex flex-col gap-3 items-center">
           <div v-for="header in headers" :key="header.id">
@@ -15,8 +15,10 @@
                 placeholder="value"
                 v-model="header.value"
               />
-              <Button class="min-w-2/12" @click="deleteHeader(header.id)"
-                >x</Button
+              <Button
+                class="min-w-2/12 bg-main-color"
+                @click="deleteHeader(header.id)"
+                >✖</Button
               >
             </div>
             <div class="mt-3 hr" />
