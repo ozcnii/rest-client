@@ -952,6 +952,11 @@ sourcemap-codec@^1.4.8:
   resolved "https://registry.npmjs.org/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz"
   integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
 
+splitpanes@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/splitpanes/-/splitpanes-3.1.0.tgz#74876be93506a6884b53c3dba7cf94a446b573c9"
+  integrity sha512-O7yaiAJiqjnBW7nU96RwL5L0yu3F5zSjOwkTxrK4Ot63offVBt9KwORcydLsTkwVcQqwT3FTuKB77m5UGXKvcw==
+
 supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz"

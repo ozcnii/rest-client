@@ -24,6 +24,7 @@ export const fetchData = async (url, method, options) => {
     case "POST":
       return axios.post(url, {
         params,
+        headers,
       });
     default:
       throw new Error("internal error");

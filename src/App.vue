@@ -3,22 +3,38 @@
     <HeaderForm />
 
     <div class="mt-16 flex gap-3 grow">
-      <LeftBar class="left-bar" />
-      <RightBar class="right-bar" />
+      <splitpanes>
+        <pane min-size="20">
+          <LeftBar />
+        </pane>
+        <pane min-size="20">
+          <CenterBar />
+        </pane>
+
+        <pane min-size="20">
+          <RightBar class="overflow-x-auto" />
+        </pane>
+      </splitpanes>
     </div>
   </div>
 </template>
 
 <script>
+import CenterBar from "./components/CenterBar.vue";
 import LeftBar from "./components/LeftBar.vue";
 import RightBar from "./components/RightBar.vue";
 import HeaderForm from "./components/HeaderForm.vue";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
+import { Splitpanes, Pane } from "splitpanes";
+import "splitpanes/dist/splitpanes.css";
 
 export default defineComponent({
   components: {
+    Splitpanes,
+    Pane,
     LeftBar,
+    CenterBar,
     RightBar,
     HeaderForm,
   },
@@ -42,14 +58,5 @@ export default defineComponent({
 <style scoped>
 .bg-main {
   background-color: var(--main-bg-color);
-}
-.left-bar {
-  width: 100%;
-}
-.right-bar {
-  width: 60vw;
-  max-width: 60vw;
-  min-width: 60vw;
-  overflow-x: auto;
 }
 </style>
