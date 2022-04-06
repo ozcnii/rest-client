@@ -12,8 +12,8 @@ export const actions = {
         commit("setRequestResult", null);
 
         const result = await fetchData(state.url, state.method, state.options);
-
-        commit("setRequestResult", result.data);
+        console.log(result);
+        commit("setRequestResult", result.data || "no data");
         commit("setStatusCode", result.status);
         commit("setRequestTime", Date.now() - start);
       } catch (e) {
