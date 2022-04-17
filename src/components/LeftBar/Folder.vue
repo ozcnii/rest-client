@@ -18,10 +18,11 @@
         >
       </div>
     </div>
-
-    <div v-if="folder.isOpen" @click.stop>
-      <Requests :requests="folder.requests" />
-    </div>
+    <Transition name="requests">
+      <div v-if="folder.isOpen" @click.stop>
+        <Requests :requests="folder.requests" />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -49,5 +50,16 @@ export default defineComponent({
 
 .Button:hover {
   background-color: var(--main-bg-color);
+}
+
+.requests-enter-active,
+.requests-leave-active {
+  transition: 0.2s ease-in-out;
+}
+
+.requests-enter-from,
+.requests-leave-to {
+  opacity: 0;
+  transform: translateX(-50px);
 }
 </style>
