@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import BodyVue from "../components/options/Body.vue";
-import HeadersVue from "../components/options/Headers.vue";
-import QueryParamsVue from "../components/options/QueryParams.vue";
+import BodyVue from "../components/CenterBar/Options/Body.vue";
+import HeadersVue from "../components/CenterBar/Options/Headers.vue";
+import QueryParamsVue from "../components/CenterBar/Options/QueryParams.vue";
 
 const router = createRouter({
   routes: [
+    {
+      path: "/",
+      redirect: "/body",
+    },
     {
       path: "/body",
       component: BodyVue,

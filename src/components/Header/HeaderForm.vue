@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import Input from "./UI/Input.vue";
-import Select from "./UI/Select.vue";
-import Button from "./UI/Button.vue";
+import Input from "../UI/Input.vue";
+import Select from "../UI/Select.vue";
+import Button from "../UI/Button.vue";
 import { mapState, mapMutations, mapActions } from "vuex";
 import { defineComponent } from "vue";
 

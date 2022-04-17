@@ -1,1 +1,0 @@
-<template>Left Bar</template>

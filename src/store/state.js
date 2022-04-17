@@ -10,9 +10,6 @@ export const state = () => ({
   isLoading: false,
   error: null,
 
-  options: {
-    params: [],
-    headers: [],
-    body: '{"a": "b"}',
-  },
+  // activeRequestId: "",
+  // request: [],
 });

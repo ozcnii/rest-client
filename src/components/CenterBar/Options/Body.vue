@@ -21,10 +21,10 @@ export default defineComponent({
   },
 
   beforeMount() {
-    const body = this.getBody;
-    if (body) {
-      this.body = body;
-    }
+    // const body = this.getBody;
+    // if (body) {
+    //   this.body = body;
+    // }
   },
 
   data() {

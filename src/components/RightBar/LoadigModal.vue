@@ -6,7 +6,6 @@
 
 <style scoped>
 .modal {
-  /* background-color: var(--main-bg-color); */
   z-index: 2;
   background-color: #171717b9;
 }

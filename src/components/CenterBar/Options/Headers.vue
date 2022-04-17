@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import Input from "../UI/Input.vue";
+import Input from "@/components/UI/Input.vue";
 import { mapGetters, mapMutations } from "vuex";
 import { defineComponent } from "vue";
-import Button from "../UI/Button.vue";
+import Button from "@/components/UI/Button.vue";
 
 export default defineComponent({
   components: {
@@ -48,10 +48,10 @@ export default defineComponent({
   },
 
   beforeMount() {
-    const headers = this.getHeaders;
-    if (headers) {
-      this.headers = headers;
-    }
+    // const headers = this.getHeaders;
+    // if (headers) {
+    //   this.headers = headers;
+    // }
   },
 
   methods: {

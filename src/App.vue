@@ -4,7 +4,7 @@
 
     <div class="mt-16 flex gap-3 grow">
       <splitpanes>
-        <pane max-size="0">
+        <pane min-size="20">
           <LeftBar />
         </pane>
         <pane min-size="20">
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import CenterBar from "./components/CenterBar.vue";
-import LeftBar from "./components/LeftBar.vue";
-import RightBar from "./components/RightBar.vue";
-import HeaderForm from "./components/HeaderForm.vue";
+import CenterBar from "./components/CenterBar/CenterBar.vue";
+import LeftBar from "./components/LeftBar/LeftBar.vue";
+import RightBar from "./components/RightBar/RightBar.vue";
+import HeaderForm from "./components/Header/HeaderForm.vue";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { Splitpanes, Pane } from "splitpanes";
@@ -39,21 +39,12 @@ export default defineComponent({
     HeaderForm,
   },
   beforeMount() {
-    const params = JSON.parse(localStorage.getItem("params"));
-    const headers = JSON.parse(localStorage.getItem("headers"));
-    const body = JSON.parse(localStorage.getItem("body"));
-
-    if (params) {
-      this.setParams(params);
-    }
-
-    if (headers) {
-      this.setHeaders(headers);
-    }
-
-    if (body) {
-      this.setBody(body);
-    }
+    // const params = JSON.parse(localStorage.getItem("params"));
+    // const headers = JSON.parse(localStorage.getItem("headers"));
+    // const body = JSON.parse(localStorage.getItem("body"));
+    // if (params) this.setParams(params);
+    // if (headers) this.setHeaders(headers);
+    // if (body) this.setBody(body);
   },
   methods: {
     ...mapMutations(["setParams", "setHeaders", "setBody"]),
