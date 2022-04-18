@@ -1,29 +1,42 @@
+export const Mutations = {
+  setMethod: "setMethod",
+  setUrl: "setUrl",
+  setRequestResult: "setRequestResult",
+  setRequestTime: "setRequestTime",
+  setStatusCode: "setStatusCode",
+  setLoading: "setLoading",
+  setError: "setError",
+  setFolderName: "setFolderName",
+  deleteFolder: "deleteFolder",
+  createFolder: "createFolder",
+};
+
 export const mutations = {
-  setMethod(state, method) {
+  [Mutations.setMethod](state, method) {
     state.method = method;
   },
 
-  setUrl(state, url) {
+  [Mutations.setUrl](state, url) {
     state.url = url;
   },
 
-  setRequestResult(state, result) {
+  [Mutations.setRequestResult](state, result) {
     state.requestResult = result;
   },
 
-  setRequestTime(state, time) {
+  [Mutations.setRequestTime](state, time) {
     state.requestTime = time;
   },
 
-  setStatusCode(state, statusCode) {
+  [Mutations.setStatusCode](state, statusCode) {
     state.statusCode = statusCode;
   },
 
-  setLoading(state, loading) {
+  [Mutations.setLoading](state, loading) {
     state.isLoading = loading;
   },
 
-  setError(state, error) {
+  [Mutations.setError](state, error) {
     state.error = error;
   },
 
@@ -38,4 +51,24 @@ export const mutations = {
   // setBody(state, body) {
   //   state.options.body = body;
   // },
+
+  [Mutations.setFolderName](state, { folder_id, name }) {
+    const currentFolder = state.folders.find(
+      (folder) => folder.id === folder_id
+    );
+    currentFolder.name = name;
+  },
+
+  [Mutations.deleteFolder](state, { folder_id }) {
+    state.folders = state.folders.filter((folder) => folder.id !== folder_id);
+  },
+
+  [Mutations.createFolder](state, { name }) {
+    state.folders.unshift({
+      id: Date.now(),
+      name,
+      isOpen: false,
+      requests: [],
+    });
+  },
 };

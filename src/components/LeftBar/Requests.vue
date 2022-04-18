@@ -10,11 +10,21 @@
       </div>
 
       <div class="flex gap-2">
-        <Button class="text-yellow-500 Button px-2 py-1 rounded-md"
+        <Button
+          class="bg-transparent text-yellow-500 Button px-2 py-1 rounded-md"
           >&#9998;</Button
         >
-        <Button class="text-red-500 Button px-2 py-1 rounded-md">✖</Button>
+        <Button class="bg-transparent text-red-500 Button px-2 py-1 rounded-md"
+          >✖</Button
+        >
       </div>
+    </li>
+
+    <li
+      v-if="!requests.length"
+      class="px-5 py-2 flex justify-between Request items-center"
+    >
+      No requests on this folder
     </li>
   </ul>
 </template>
@@ -22,12 +32,13 @@
 <script>
 import { defineComponent } from "vue";
 import RequestMethod from "./RequestMethod.vue";
+import Button from "@/components/UI/Button.vue";
 
 export default defineComponent({
   props: {
     requests: Array,
   },
-  components: { RequestMethod },
+  components: { RequestMethod, Button },
 });
 </script>
 
