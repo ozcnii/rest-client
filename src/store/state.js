@@ -12,6 +12,8 @@ export const state = () => ({
 
   activeRequest: null,
 
+  notActiveRequest: null,
+
   folders: [
     {
       id: 1,
@@ -23,12 +25,16 @@ export const state = () => ({
           method: "GET",
           name: "get users",
           url: "https://jsonplaceholder.typicode.com/users",
+          folder_id: 1,
+          body: '{"data": 12}',
         },
         {
           id: 1112,
           method: "GET",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
+          folder_id: 1,
+          body: '{"data": 12333}',
         },
       ],
     },
@@ -42,18 +48,21 @@ export const state = () => ({
           method: "POST",
           name: "get users",
           url: "https://jsonplaceholder.typicode.com/users",
+          folder_id: 2,
         },
         {
           id: 2221,
           method: "PATCH",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
+          folder_id: 2,
         },
         {
           id: 2223,
           method: "DELETE",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
+          folder_id: 2,
         },
       ],
     },
@@ -67,18 +76,21 @@ export const state = () => ({
           method: "POST",
           name: "get users",
           url: "https://jsonplaceholder.typicode.com/users",
+          folder_id: 3,
         },
         {
           id: 3332,
           method: "PATCH",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
+          folder_id: 3,
         },
         {
           id: 3333,
           method: "DELETE",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
+          folder_id: 3,
         },
       ],
     },

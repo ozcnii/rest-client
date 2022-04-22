@@ -40,7 +40,7 @@
     </div>
     <Transition name="requests">
       <div v-if="folder.isOpen" @click.stop>
-        <Requests :folder_id="folder.id" :requests="folder.requests" />
+        <Requests :requests="folder.requests" />
       </div>
     </Transition>
   </div>

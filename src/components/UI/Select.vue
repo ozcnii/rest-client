@@ -44,6 +44,14 @@ export default defineComponent({
       open: false,
     };
   },
+
+  watch: {
+    default: {
+      handler(value) {
+        this.selected = value;
+      },
+    },
+  },
   mounted() {
     this.$emit("input", this.selected);
   },

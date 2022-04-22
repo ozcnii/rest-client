@@ -18,4 +18,8 @@ export const getters = {
   getActiveRequest(state) {
     return state.activeRequest;
   },
+
+  getNotActiveRequest(state) {
+    return state.notActiveRequest;
+  },
 };

@@ -14,7 +14,7 @@
       </div>
 
       <Button
-        @click.stop="deleteRequest(request.id)"
+        @click.stop="deleteRequest(request.id, request.folder_id)"
         class="text-red-500 Button px-2 py-1 rounded-md"
         >✖</Button
       >
@@ -39,7 +39,6 @@ import { Mutations } from "../../store/mutations";
 export default defineComponent({
   props: {
     requests: Array,
-    folder_id: Number,
   },
   components: { RequestMethod, Button },
 
@@ -52,10 +51,10 @@ export default defineComponent({
       this.setActiveRequest(null);
     },
 
-    deleteRequest(request_id) {
+    deleteRequest(request_id, folder_id) {
       this[Mutations.DELETE_REQUEST]({
         request_id,
-        folder_id: this.folder_id,
+        folder_id,
       });
       this.clearActiveRequest();
     },

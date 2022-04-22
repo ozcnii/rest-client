@@ -8,18 +8,22 @@ const router = createRouter({
     {
       path: "/",
       redirect: "/body",
+      meta: { keepAlive: true },
     },
     {
       path: "/body",
       component: BodyVue,
+      meta: { keepAlive: true },
     },
     {
       path: "/params",
       component: QueryParamsVue,
+      meta: { keepAlive: true },
     },
     {
       path: "/headers",
       component: HeadersVue,
+      meta: { keepAlive: true },
     },
   ],
   history: createWebHistory(),

@@ -11,6 +11,8 @@ export const Mutations = {
   createFolder: "createFolder",
   SET_ACTIVE_REQUEST: "SET_ACTIVE_REQUEST",
   DELETE_REQUEST: "DELETE_REQUEST",
+  SAVE_REQUEST: "SAVE_REQUEST",
+  SET_NOT_ACTIVE_REQUEST: "SET_NOT_ACTIVE_REQUEST",
 };
 
 export const mutations = {
@@ -68,7 +70,7 @@ export const mutations = {
 
   [Mutations.DELETE_REQUEST](state, { request_id, folder_id }) {
     const currentFolder = state.folders.find(
-      (folder) => folder.id == folder_id
+      (folder) => folder.id === folder_id
     );
 
     if (currentFolder) {
@@ -76,5 +78,26 @@ export const mutations = {
         (request) => request.id !== request_id
       );
     }
+  },
+
+  [Mutations.SAVE_REQUEST](state, request) {
+    const currentFolder = state.folders.find(
+      (folder) => folder.id === request.folder_id
+    );
+
+    if (currentFolder) {
+      const currentRequestIndex = currentFolder.requests.findIndex(
+        (req) => req.id === request.id
+      );
+
+      if (currentRequestIndex !== null) {
+        currentFolder.requests[currentRequestIndex] = request;
+      }
+    }
+  },
+
+  [Mutations.SET_NOT_ACTIVE_REQUEST](state, request) {
+    console.log(request);
+    state.notActiveRequest = request;
   },
 };

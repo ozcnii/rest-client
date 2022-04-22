@@ -1,30 +1,41 @@
 <template>
-  <prism-editor
-    class="my-editor rounded-md"
-    v-model="body"
-    :highlight="highlighter"
-    line-numbers
-  />
+  <keep-alive>
+    <v-ace-editor
+      v-model:value="body"
+      lang="json"
+      theme="tomorrow_night"
+      style="height: 100%"
+      :options="{ useWorker: true }"
+    />
+  </keep-alive>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import { PrismEditor } from "vue-prism-editor";
-import "vue-prism-editor/dist/prismeditor.min.css";
-import { highlight, languages } from "prismjs/components/prism-core";
-import "prismjs/components/prism-json";
 import { mapGetters, mapMutations } from "vuex";
+import { Mutations } from "./../../../store/mutations";
+
+import { VAceEditor } from "vue3-ace-editor";
+import "ace-builds/src-noconflict/mode-json";
+import "ace-builds/src-noconflict/theme-tomorrow_night";
+import ace from "ace-builds";
+import workerJsonUrl from "ace-builds/src-noconflict/worker-json?url";
+ace.config.setModuleUrl("ace/mode/json_worker", workerJsonUrl);
 
 export default defineComponent({
   components: {
     PrismEditor,
+    VAceEditor,
   },
 
-  beforeMount() {
-    // const body = this.getBody;
-    // if (body) {
-    //   this.body = body;
-    // }
+  mounted() {
+    const body = this.getActiveRequest?.body;
+    if (body) this.body = body;
+    else {
+      const body = this.getNotActiveRequest?.body;
+      if (body) this.body = body;
+    }
   },
 
   data() {
@@ -32,46 +43,48 @@ export default defineComponent({
       body: "{}",
     };
   },
+
   methods: {
-    highlighter(body) {
-      return highlight(body, languages.json);
-    },
-
     saveBody() {
-      this.setBody(this.body);
-      localStorage.setItem("body", JSON.stringify(this.body));
+      const newRequest = {
+        ...this.getActiveRequest,
+        body: this.body,
+      };
+      this[Mutations.SAVE_REQUEST](newRequest);
+      this[Mutations.SET_ACTIVE_REQUEST](newRequest);
     },
 
-    ...mapMutations(["setBody"]),
+    saveNotActiveRequestBody() {
+      const request = { ...this.getNotActiveRequest, body: this.body };
+      this[Mutations.SET_NOT_ACTIVE_REQUEST](request);
+    },
+
+    ...mapMutations([
+      `${Mutations.SAVE_REQUEST}`,
+      `${Mutations.SET_ACTIVE_REQUEST}`,
+      `${Mutations.SET_NOT_ACTIVE_REQUEST}`,
+    ]),
   },
 
   watch: {
     body: {
       handler() {
-        this.saveBody();
+        if (this.getActiveRequest) this.saveBody();
+        else this.saveNotActiveRequestBody();
+      },
+    },
+    getActiveRequest: {
+      handler(value) {
+        const body = value?.body;
+        if (body) this.body = body;
+        else this.body = "{}";
       },
       deep: true,
     },
   },
 
   computed: {
-    ...mapGetters(["getBody"]),
+    ...mapGetters(["getActiveRequest", "getNotActiveRequest"]),
   },
 });
 </script>
-
-<style>
-.my-editor {
-  background-color: var(--second-bg-color);
-  color: #ccc;
-  font-family: Consolas, Menlo, Courier, monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  padding: 5px;
-}
-
-/* optional class for removing the outline */
-.prism-editor__textarea:focus {
-  outline: none;
-}
-</style>
