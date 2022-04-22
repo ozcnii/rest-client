@@ -14,4 +14,8 @@ export const getters = {
   getFolders(state) {
     return state.folders;
   },
+
+  getActiveRequest(state) {
+    return state.activeRequest;
+  },
 };

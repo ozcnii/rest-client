@@ -9,6 +9,8 @@ export const Mutations = {
   setFolderName: "setFolderName",
   deleteFolder: "deleteFolder",
   createFolder: "createFolder",
+  SET_ACTIVE_REQUEST: "SET_ACTIVE_REQUEST",
+  DELETE_REQUEST: "DELETE_REQUEST",
 };
 
 export const mutations = {
@@ -40,18 +42,6 @@ export const mutations = {
     state.error = error;
   },
 
-  // setParams(state, params) {
-  //   state.options.params = params;
-  // },
-
-  // setHeaders(state, headers) {
-  //   state.options.headers = headers;
-  // },
-
-  // setBody(state, body) {
-  //   state.options.body = body;
-  // },
-
   [Mutations.setFolderName](state, { folder_id, name }) {
     const currentFolder = state.folders.find(
       (folder) => folder.id === folder_id
@@ -70,5 +60,21 @@ export const mutations = {
       isOpen: false,
       requests: [],
     });
+  },
+
+  [Mutations.SET_ACTIVE_REQUEST](state, newRequest) {
+    state.activeRequest = newRequest;
+  },
+
+  [Mutations.DELETE_REQUEST](state, { request_id, folder_id }) {
+    const currentFolder = state.folders.find(
+      (folder) => folder.id == folder_id
+    );
+
+    if (currentFolder) {
+      currentFolder.requests = currentFolder.requests.filter(
+        (request) => request.id !== request_id
+      );
+    }
   },
 };

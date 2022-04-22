@@ -14,9 +14,10 @@ body {
 
 :root {
   --main-color: #6366f1;
-  --main-bg-color: #171717;
+  --main-bg-color: #050404;
   --second-bg-color: #1c1c1e;
   --border-color: #262626;
+  --second-color: #494bc7;
 }
 
 .hr {

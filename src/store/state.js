@@ -10,7 +10,7 @@ export const state = () => ({
   isLoading: false,
   error: null,
 
-  // activeRequestId: "",
+  activeRequest: null,
 
   folders: [
     {
@@ -19,13 +19,13 @@ export const state = () => ({
       isOpen: false,
       requests: [
         {
-          id: Date.now(),
+          id: 111,
           method: "GET",
           name: "get users",
           url: "https://jsonplaceholder.typicode.com/users",
         },
         {
-          id: Date.now(),
+          id: 1112,
           method: "GET",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
@@ -38,19 +38,19 @@ export const state = () => ({
       isOpen: false,
       requests: [
         {
-          id: Date.now(),
+          id: 222,
           method: "POST",
           name: "get users",
           url: "https://jsonplaceholder.typicode.com/users",
         },
         {
-          id: Date.now(),
+          id: 2221,
           method: "PATCH",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
         },
         {
-          id: Date.now(),
+          id: 2223,
           method: "DELETE",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
@@ -63,88 +63,19 @@ export const state = () => ({
       isOpen: false,
       requests: [
         {
-          id: Date.now(),
+          id: 333,
           method: "POST",
           name: "get users",
           url: "https://jsonplaceholder.typicode.com/users",
         },
         {
-          id: Date.now(),
+          id: 3332,
           method: "PATCH",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
         },
         {
-          id: Date.now(),
-          method: "DELETE",
-          name: "get 2 users",
-          url: "https://jsonplaceholder.typicode.com/users?_limit=2",
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "users",
-      isOpen: false,
-      requests: [
-        {
-          id: Date.now(),
-          method: "GET",
-          name: "get users",
-          url: "https://jsonplaceholder.typicode.com/users",
-        },
-        {
-          id: Date.now(),
-          method: "GET",
-          name: "get 2 users",
-          url: "https://jsonplaceholder.typicode.com/users?_limit=2",
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: "posts",
-      isOpen: false,
-      requests: [
-        {
-          id: Date.now(),
-          method: "POST",
-          name: "get users",
-          url: "https://jsonplaceholder.typicode.com/users",
-        },
-        {
-          id: Date.now(),
-          method: "PATCH",
-          name: "get 2 users",
-          url: "https://jsonplaceholder.typicode.com/users?_limit=2",
-        },
-        {
-          id: Date.now(),
-          method: "DELETE",
-          name: "get 2 users",
-          url: "https://jsonplaceholder.typicode.com/users?_limit=2",
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: "todos",
-      isOpen: false,
-      requests: [
-        {
-          id: Date.now(),
-          method: "POST",
-          name: "get users",
-          url: "https://jsonplaceholder.typicode.com/users",
-        },
-        {
-          id: Date.now(),
-          method: "PATCH",
-          name: "get 2 users",
-          url: "https://jsonplaceholder.typicode.com/users?_limit=2",
-        },
-        {
-          id: Date.now(),
+          id: 3333,
           method: "DELETE",
           name: "get 2 users",
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",

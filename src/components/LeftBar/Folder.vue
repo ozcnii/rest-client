@@ -21,26 +21,26 @@
         <Button
           v-if="!isEditMode"
           @click="setEditModeActive"
-          class="bg-transparent hover:text-yellow-500 Button px-2 py-1 rounded-md"
+          class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
           >&#9998;</Button
         >
         <Button
           v-else
           @click="setEditModeInactive"
-          class="bg-transparent hover:text-yellow-500 Button px-2 py-1 rounded-md"
+          class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
           >💾</Button
         >
 
         <Button
           @click="deleteCurrentFolder"
-          class="bg-transparent hover:text-red-500 Button px-2 py-1 rounded-md"
+          class="hover:text-red-500 Button px-2 py-1 rounded-md"
           >✖</Button
         >
       </div>
     </div>
     <Transition name="requests">
       <div v-if="folder.isOpen" @click.stop>
-        <Requests :requests="folder.requests" />
+        <Requests :folder_id="folder.id" :requests="folder.requests" />
       </div>
     </Transition>
   </div>
@@ -73,28 +73,34 @@ export default defineComponent({
     },
 
     setEditModeInactive() {
-      this.isEditMode = false;
-      this.setName();
+      if (this.folderName) {
+        this.isEditMode = false;
+        this.setName();
+      }
     },
 
     setName() {
-      if (this.folderName) {
-        this[Mutations.setFolderName]({
-          folder_id: this.folder.id,
-          name: this.folderName,
-        });
-      }
+      this[Mutations.setFolderName]({
+        folder_id: this.folder.id,
+        name: this.folderName,
+      });
     },
 
     deleteCurrentFolder() {
       this[Mutations.deleteFolder]({
         folder_id: this.folder.id,
       });
+      this.clearActiveRequest();
+    },
+
+    clearActiveRequest() {
+      this[Mutations.SET_ACTIVE_REQUEST](null);
     },
 
     ...mapMutations([
       `${Mutations.setFolderName}`,
       `${Mutations.deleteFolder}`,
+      `${[Mutations.SET_ACTIVE_REQUEST]}`,
     ]),
   },
 
@@ -108,6 +114,9 @@ export default defineComponent({
 }
 .Folder:hover {
   background-color: var(--border-color);
+}
+.Button {
+  background: transparent;
 }
 .Button:hover {
   background-color: var(--main-bg-color);
