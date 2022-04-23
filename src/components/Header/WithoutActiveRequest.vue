@@ -12,6 +12,7 @@
         :modelValue="url"
         @update:modelValue="setUrl"
         class="w-full rounded-r-none rounded-l-none"
+        required
         placeholder="URL"
       />
 
@@ -62,9 +63,7 @@ export default defineComponent({
     ...mapActions(["getRrequest"]),
 
     saveRequest() {
-      if (this.url.trim()) {
-        this.openModal();
-      }
+      if (this.url.trim()) this.openModal();
     },
 
     openModal() {

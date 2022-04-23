@@ -9,6 +9,7 @@
               <Input
                 placeholder="Enter new folder name "
                 v-model.trim="folderName"
+                required
                 class="rounded-r-none"
               />
               <Button class="Button rounded-l-none">Create new folder</Button>
@@ -42,6 +43,7 @@
                     autofocus
                     placeholder="Enter new request name "
                     v-model.trim="requestName"
+                    required
                     class="rounded-r-none"
                   />
                   <Button class="Button rounded-l-none">Create request</Button>
@@ -87,7 +89,6 @@ export default defineComponent({
     createRequest() {
       if (this.requestName.trim()) {
         const folder_id = this.selectedFolderId;
-
         const request = {
           ...this.getNotActiveRequest,
           method: this.getNotActiveRequest?.method || "GET",
