@@ -97,7 +97,6 @@ export const mutations = {
   },
 
   [Mutations.SET_NOT_ACTIVE_REQUEST](state, request) {
-    console.log(request);
     state.notActiveRequest = request;
   },
 };

@@ -12,10 +12,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import { PrismEditor } from "vue-prism-editor";
 import { mapGetters, mapMutations } from "vuex";
 import { Mutations } from "./../../../store/mutations";
-
 import { VAceEditor } from "vue3-ace-editor";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
@@ -25,7 +23,6 @@ ace.config.setModuleUrl("ace/mode/json_worker", workerJsonUrl);
 
 export default defineComponent({
   components: {
-    PrismEditor,
     VAceEditor,
   },
 
@@ -34,13 +31,19 @@ export default defineComponent({
     if (body) this.body = body;
     else {
       const body = this.getNotActiveRequest?.body;
-      if (body) this.body = body;
+      try {
+        if (body)
+          this.body = JSON.stringify(JSON.parse(body), null, this.jsonTabSize);
+      } catch (error) {
+        if (body) this.body = body;
+      }
     }
   },
 
   data() {
     return {
       body: "{}",
+      jsonTabSize: 2,
     };
   },
 
@@ -77,7 +80,18 @@ export default defineComponent({
       handler(value) {
         const body = value?.body;
         if (body) this.body = body;
-        else this.body = "{}";
+        try {
+          if (body)
+            this.body = JSON.stringify(
+              JSON.parse(body),
+              null,
+              this.jsonTabSize
+            );
+        } catch (error) {
+          if (body) this.body = body;
+        } finally {
+          if (!body) this.body = "{}";
+        }
       },
       deep: true,
     },
