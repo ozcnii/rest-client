@@ -70,9 +70,3 @@ export default defineComponent({
   components: { Folder, Button, Input },
 });
 </script>
-
-<style scoped>
-.Button {
-  background-color: var(--main-color);
-}
-</style>

@@ -23,6 +23,8 @@
       <Button class="button rounded-l-none"> Send </Button>
     </form>
   </div>
+
+  <SaveRequestModal v-if="isShowModal" @close="closeModal" />
 </template>
 
 <script>
@@ -32,18 +34,21 @@ import Button from "../UI/Button.vue";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { defineComponent } from "vue";
 import { Mutations } from "../../store/mutations";
+import SaveRequestModal from "./SaveRequestModal.vue";
 
 export default defineComponent({
   components: {
     Input,
     Select,
     Button,
+    SaveRequestModal,
   },
 
   data() {
     return {
       url: "",
       method: "GET",
+      isShowModal: false,
     };
   },
 
@@ -57,12 +62,17 @@ export default defineComponent({
     ...mapActions(["getRrequest"]),
 
     saveRequest() {
-      // open modal:
-      // folder list: [...]
-      // or create new list []
-      // name
-      // save this.getNotActiveRequest
-      console.log("save");
+      if (this.url.trim()) {
+        this.openModal();
+      }
+    },
+
+    openModal() {
+      this.isShowModal = true;
+    },
+
+    closeModal() {
+      this.isShowModal = false;
     },
 
     setMethod(method) {

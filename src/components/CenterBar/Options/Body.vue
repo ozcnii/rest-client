@@ -1,13 +1,11 @@
 <template>
-  <keep-alive>
-    <v-ace-editor
-      v-model:value="body"
-      lang="json"
-      theme="tomorrow_night"
-      style="height: 100%"
-      :options="{ useWorker: true }"
-    />
-  </keep-alive>
+  <v-ace-editor
+    v-model:value="body"
+    lang="json"
+    theme="tomorrow_night_bright"
+    class="h-full rounded-md"
+    :options="{ useWorker: true }"
+  />
 </template>
 
 <script>
@@ -16,7 +14,8 @@ import { mapGetters, mapMutations } from "vuex";
 import { Mutations } from "./../../../store/mutations";
 import { VAceEditor } from "vue3-ace-editor";
 import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/theme-tomorrow_night";
+import "ace-builds/src-noconflict/theme-tomorrow_night_bright";
+
 import ace from "ace-builds";
 import workerJsonUrl from "ace-builds/src-noconflict/worker-json?url";
 ace.config.setModuleUrl("ace/mode/json_worker", workerJsonUrl);

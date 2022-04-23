@@ -89,6 +89,7 @@ export default defineComponent({
 
 .Button {
   background: transparent;
+  border-color: transparent;
 }
 
 .Button:hover {

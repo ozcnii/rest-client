@@ -117,6 +117,7 @@ export default defineComponent({
 }
 .Button {
   background: transparent;
+  border-color: transparent;
 }
 .Button:hover {
   background-color: var(--main-bg-color);

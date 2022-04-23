@@ -13,6 +13,8 @@ export const Mutations = {
   DELETE_REQUEST: "DELETE_REQUEST",
   SAVE_REQUEST: "SAVE_REQUEST",
   SET_NOT_ACTIVE_REQUEST: "SET_NOT_ACTIVE_REQUEST",
+  CREATE_REQUEST: "CREATE_REQUEST",
+  OPEN_FOLDER: "OPEN_FOLDER",
 };
 
 export const mutations = {
@@ -73,11 +75,10 @@ export const mutations = {
       (folder) => folder.id === folder_id
     );
 
-    if (currentFolder) {
+    if (currentFolder)
       currentFolder.requests = currentFolder.requests.filter(
         (request) => request.id !== request_id
       );
-    }
   },
 
   [Mutations.SAVE_REQUEST](state, request) {
@@ -90,13 +91,26 @@ export const mutations = {
         (req) => req.id === request.id
       );
 
-      if (currentRequestIndex !== null) {
+      if (currentRequestIndex !== null)
         currentFolder.requests[currentRequestIndex] = request;
-      }
     }
   },
 
   [Mutations.SET_NOT_ACTIVE_REQUEST](state, request) {
     state.notActiveRequest = request;
+  },
+
+  [Mutations.CREATE_REQUEST](state, { folder_id, request }) {
+    const currentFolder = state.folders.find(
+      (folder) => folder.id === folder_id
+    );
+    if (currentFolder) currentFolder.requests.push(request);
+  },
+
+  [Mutations.OPEN_FOLDER](state, folder_id) {
+    const currentFolder = state.folders.find(
+      (folder) => folder.id === folder_id
+    );
+    if (currentFolder) currentFolder.isOpen = true;
   },
 };

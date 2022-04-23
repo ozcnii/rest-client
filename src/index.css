@@ -45,6 +45,12 @@ body {
 .text-main {
   color: var(--main-color);
 }
+
 .bg-main-color {
   background-color: var(--main-color);
+}
+
+.Button {
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
 }
