@@ -1,17 +1,18 @@
 import axios from "axios";
 
-export const fetchData = async (url, method, options) => {
+export const fetchData = async (request) => {
+  const { url, method } = request;
   const configuredOptions = {
     params: {},
     headers: {},
-    body: options.body,
+    body: request?.body || {},
   };
 
-  options.params.forEach((q) => {
+  request?.params?.forEach((q) => {
     configuredOptions.params[q.key] = q.value;
   });
 
-  options.headers.forEach((q) => {
+  request?.headers?.forEach((q) => {
     configuredOptions.headers[q.key] = q.value;
   });
 

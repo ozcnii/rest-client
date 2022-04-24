@@ -1,5 +1,4 @@
 export const state = () => ({
-  url: "",
   method: "GET",
   httpMethods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 
