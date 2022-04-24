@@ -34,6 +34,7 @@ import Input from "@/components/UI/Input.vue";
 import { mapGetters, mapMutations } from "vuex";
 import { defineComponent } from "vue";
 import Button from "@/components/UI/Button.vue";
+import { Mutations } from "../../../store/mutations";
 
 export default defineComponent({
   components: {
@@ -41,17 +42,16 @@ export default defineComponent({
     Button,
   },
 
+  mounted() {
+    const params = this.getActiveRequest?.params;
+    if (params) this.params = params;
+    else this.params = this.getNotActiveRequest?.params || [];
+  },
+
   data() {
     return {
       params: [],
     };
-  },
-
-  beforeMount() {
-    // const params = this.getParams;
-    // if (params) {
-    //   this.params = params;
-    // }
   },
 
   methods: {
@@ -66,25 +66,40 @@ export default defineComponent({
     deleteQueryParam(id) {
       this.params = this.params.filter((param) => param.id !== id);
     },
+
     saveParams() {
-      this.setParams(this.params);
-      localStorage.setItem("params", JSON.stringify(this.params));
+      const newRequest = {
+        ...this.getActiveRequest,
+        params: this.params,
+      };
+      this[Mutations.SAVE_REQUEST](newRequest);
+      this[Mutations.SET_ACTIVE_REQUEST](newRequest);
     },
 
-    ...mapMutations(["setParams"]),
+    saveNotActiveRequestParams() {
+      const request = { ...this.getNotActiveRequest, params: this.params };
+      this[Mutations.SET_NOT_ACTIVE_REQUEST](request);
+    },
+
+    ...mapMutations([
+      `${Mutations.SAVE_REQUEST}`,
+      `${Mutations.SET_ACTIVE_REQUEST}`,
+      `${Mutations.SET_NOT_ACTIVE_REQUEST}`,
+    ]),
   },
 
   watch: {
     params: {
       handler() {
-        this.saveParams();
+        if (this.getActiveRequest) this.saveParams();
+        else this.saveNotActiveRequestParams();
       },
       deep: true,
     },
   },
 
   computed: {
-    ...mapGetters(["getParams"]),
+    ...mapGetters(["getActiveRequest", "getNotActiveRequest"]),
   },
 });
 </script>

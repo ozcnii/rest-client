@@ -13,7 +13,7 @@ export const fetchData = async (request) => {
   });
 
   request?.headers?.forEach((q) => {
-    configuredOptions.headers[q.key] = q.value;
+    if (q.key) configuredOptions.headers[q.key] = q.value;
   });
 
   switch (method) {

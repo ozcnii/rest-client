@@ -34,6 +34,7 @@ import Input from "@/components/UI/Input.vue";
 import { mapGetters, mapMutations } from "vuex";
 import { defineComponent } from "vue";
 import Button from "@/components/UI/Button.vue";
+import { Mutations } from "../../../store/mutations";
 
 export default defineComponent({
   components: {
@@ -41,17 +42,16 @@ export default defineComponent({
     Button,
   },
 
+  mounted() {
+    const headers = this.getActiveRequest?.headers;
+    if (headers) this.headers = headers;
+    else this.headers = this.getNotActiveRequest?.headers || [];
+  },
+
   data() {
     return {
       headers: [],
     };
-  },
-
-  beforeMount() {
-    // const headers = this.getHeaders;
-    // if (headers) {
-    //   this.headers = headers;
-    // }
   },
 
   methods: {
@@ -66,25 +66,49 @@ export default defineComponent({
     deleteHeader(id) {
       this.headers = this.headers.filter((header) => header.id !== id);
     },
+
     saveHeaders() {
-      this.setHeaders(this.headers);
-      localStorage.setItem("headers", JSON.stringify(this.headers));
+      const newRequest = {
+        ...this.getActiveRequest,
+        headers: this.headers,
+      };
+      this[Mutations.SAVE_REQUEST](newRequest);
+      this[Mutations.SET_ACTIVE_REQUEST](newRequest);
     },
 
-    ...mapMutations(["setHeaders"]),
+    saveNotActiveRequestHeaders() {
+      const request = { ...this.getNotActiveRequest, headers: this.headers };
+      this[Mutations.SET_NOT_ACTIVE_REQUEST](request);
+    },
+
+    ...mapMutations([
+      `${Mutations.SAVE_REQUEST}`,
+      `${Mutations.SET_ACTIVE_REQUEST}`,
+      `${Mutations.SET_NOT_ACTIVE_REQUEST}`,
+    ]),
   },
 
   watch: {
     headers: {
       handler() {
-        this.saveHeaders();
+        if (this.getActiveRequest) this.saveHeaders();
+        else this.saveNotActiveRequestHeaders();
+      },
+      deep: true,
+    },
+
+    getActiveRequest: {
+      handler(value) {
+        const headers = value?.headers;
+        if (headers) this.headers = headers;
+        else this.headers = [];
       },
       deep: true,
     },
   },
 
   computed: {
-    ...mapGetters(["getHeaders"]),
+    ...mapGetters(["getActiveRequest", "getNotActiveRequest"]),
   },
 });
 </script>

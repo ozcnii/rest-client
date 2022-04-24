@@ -26,6 +26,13 @@ export const state = () => ({
           url: "https://jsonplaceholder.typicode.com/users",
           folder_id: 1,
           body: '{"data": 12}',
+          headers: [
+            {
+              key: "1",
+              value: "2",
+              id: 111_1,
+            },
+          ],
         },
         {
           id: 1112,
