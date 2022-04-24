@@ -96,6 +96,15 @@ export default defineComponent({
       },
       deep: true,
     },
+
+    getActiveRequest: {
+      handler(value) {
+        const params = value?.params;
+        if (params) this.params = params;
+        else this.params = [];
+      },
+      deep: true,
+    },
   },
 
   computed: {

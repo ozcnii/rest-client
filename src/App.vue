@@ -7,7 +7,7 @@
         <pane min-size="20">
           <LeftBar />
         </pane>
-        <pane min-size="20">
+        <pane min-size="0">
           <CenterBar />
         </pane>
 
