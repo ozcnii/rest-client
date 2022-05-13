@@ -6,21 +6,13 @@
           <div class="mb-5 flex justify-center gap-3 items-center flex-col">
             <p>Select folder or</p>
             <form @submit.prevent="createFolderHandler">
-              <Input
-                placeholder="Enter new folder name "
-                v-model.trim="folderName"
-                required
-                class="rounded-r-none"
-              />
+              <Input placeholder="Enter new folder name " v-model.trim="folderName" required class="rounded-r-none" />
               <Button class="Button rounded-l-none">Create new folder</Button>
             </form>
           </div>
           <ul class="flex flex-col gap-3">
-            <li
-              v-for="folder in getFolders"
-              class="Folder__item rounded-md p-3 cursor-pointer flex items-center gap-3"
-              @click="selectFolder(folder.id)"
-            >
+            <li v-for="folder in getFolders" class="Folder__item rounded-md p-3 cursor-pointer flex items-center gap-3"
+              @click="selectFolder(folder.id)">
               <FolderIcon :isOpen="false" />
               <p>
                 {{ folder.name }}
@@ -31,21 +23,12 @@
               No saved folders
             </div>
           </ul>
-          <div
-            v-if="requestNamePopoup"
-            class="Modal__wrapper"
-            @click="closePopout"
-          >
+          <div v-if="requestNamePopoup" class="Modal__wrapper" @click="closePopout">
             <div class="Modal__content--wrapper">
               <div class="Popout__content p-3 rounded-md" @click.stop>
                 <form @submit.prevent="createRequest">
-                  <Input
-                    autofocus
-                    placeholder="Enter new request name "
-                    v-model.trim="requestName"
-                    required
-                    class="rounded-r-none"
-                  />
+                  <Input autofocus placeholder="Enter new request name " v-model.trim="requestName" required
+                    class="rounded-r-none" />
                   <Button class="Button rounded-l-none">Create request</Button>
                 </form>
               </div>
@@ -64,6 +47,7 @@ import Button from "../UI/Button.vue";
 import { mapGetters, mapMutations } from "vuex";
 import FolderIcon from "../LeftBar/FolderIcon.vue";
 import { Mutations } from "../../store/mutations";
+import { nanoid } from 'nanoid'
 
 export default defineComponent({
   emits: ["close"],
@@ -93,7 +77,7 @@ export default defineComponent({
           ...this.getNotActiveRequest,
           method: this.getNotActiveRequest?.method || "GET",
           name: this.requestName,
-          id: Date.now(),
+          id: nanoid(),
           folder_id,
         };
 

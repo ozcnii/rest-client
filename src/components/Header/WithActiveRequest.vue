@@ -1,33 +1,15 @@
 <template>
   <div class="header-wrapper p-3">
     <form class="header-form flex" @submit.prevent="getData">
-      <Select
-        class="select"
-        :options="httpMethods"
-        :default="method"
-        @input="setMethod"
-      />
+      <Select class="select" :options="httpMethods" :default="method" @input="setMethod" />
 
-      <Input
-        :modelValue="url"
-        @update:modelValue="setUrl"
-        class="w-full rounded-r-none rounded-l-none"
-        placeholder="URL"
-      />
+      <Input :modelValue="url" @update:modelValue="setUrl" class="w-full rounded-r-none rounded-l-none"
+        placeholder="URL" />
 
       <div class="flex">
-        <Button
-          type="button"
-          @click="saveRequest"
-          class="rounded-r-none rounded-l-none Options__item"
-          >save</Button
-        >
-        <Button
-          type="button"
-          @click="clearActiveRequest"
-          class="rounded-r-none rounded-l-none Options__item"
-          >new</Button
-        >
+        <Button type="button" @click="saveRequest" class="rounded-r-none rounded-l-none Options__item">save</Button>
+        <Button type="button" @click="clearActiveRequest"
+          class="rounded-r-none rounded-l-none Options__item">new</Button>
       </div>
 
       <Button class="button rounded-l-none"> Send </Button>
@@ -69,6 +51,7 @@ export default defineComponent({
         method: this.method,
         url: this.url,
       };
+      console.log(this.url);
 
       this[Mutations.SAVE_REQUEST](newRequest);
     },

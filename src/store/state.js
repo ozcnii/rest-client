@@ -10,7 +10,6 @@ export const state = () => ({
   error: null,
 
   activeRequest: null,
-
   notActiveRequest: null,
 
   folders: [

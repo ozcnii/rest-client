@@ -1,14 +1,7 @@
 <template>
   <div class="grow w-full flex flex-col">
-    <form
-      class="w-full flex justify-center items-center"
-      @submit.prevent="create"
-    >
-      <Input
-        placeholder="New folder name"
-        v-model.trim="newFolderName"
-        class="rounded-r-none w-full"
-      />
+    <form class="w-full flex justify-center items-center" @submit.prevent="create">
+      <Input placeholder="New folder name" v-model.trim="newFolderName" class="rounded-r-none w-full" />
       <Button class="rounded-l-none Button">Create</Button>
     </form>
 
@@ -16,12 +9,7 @@
 
     <div v-else class="relative mt-3 overflow-y-auto grow w-full">
       <ul class="absolute inset-0">
-        <li
-          v-for="folder in folders"
-          @click="toggleIsOpenFolder(folder.id)"
-          :key="folder.id"
-          class="px-2"
-        >
+        <li v-for="folder in folders" @click="toggleIsOpenFolder(folder.id)" :key="folder.id" class="px-2">
           <Folder :folder="folder" />
         </li>
       </ul>
@@ -52,20 +40,17 @@ export default defineComponent({
 
   methods: {
     toggleIsOpenFolder(id) {
-      const currentFolder = this.folders.find((folder) => folder.id === id);
-      currentFolder.isOpen = !currentFolder.isOpen;
+      this[Mutations.TOGGLE_OPEN_FOLDER](id);
     },
 
     create() {
       if (this.newFolderName) {
-        this[Mutations.createFolder]({
-          name: this.newFolderName,
-        });
+        this[Mutations.createFolder]({ name: this.newFolderName });
         this.newFolderName = "";
       }
     },
 
-    ...mapMutations([`${Mutations.createFolder}`]),
+    ...mapMutations([`${Mutations.createFolder}`, `${Mutations.TOGGLE_OPEN_FOLDER}`]),
   },
   components: { Folder, Button, Input },
 });

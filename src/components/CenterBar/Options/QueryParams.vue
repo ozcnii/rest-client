@@ -15,11 +15,7 @@
             <div class="flex gap-3 px-2">
               <Input class="w-5/12" placeholder="param" v-model="param.key" />
               <Input class="w-6/12" placeholder="value" v-model="param.value" />
-              <Button
-                class="min-w-2/12 bg-main-color"
-                @click="deleteQueryParam(param.id)"
-                >✖</Button
-              >
+              <Button class="min-w-2/12 bg-main-color" @click="deleteQueryParam(param.id)">✖</Button>
             </div>
             <div class="mt-3 hr" />
           </div>
@@ -35,6 +31,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { defineComponent } from "vue";
 import Button from "@/components/UI/Button.vue";
 import { Mutations } from "../../../store/mutations";
+import { nanoid } from 'nanoid'
 
 export default defineComponent({
   components: {
@@ -59,7 +56,7 @@ export default defineComponent({
       this.params.push({
         key: "",
         value: "",
-        id: Date.now(),
+        id: nanoid(),
       });
     },
 

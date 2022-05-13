@@ -10,16 +10,8 @@
           <div v-for="header in headers" :key="header.id">
             <div class="flex gap-3 px-2">
               <Input class="w-5/12" placeholder="header" v-model="header.key" />
-              <Input
-                class="w-6/12"
-                placeholder="value"
-                v-model="header.value"
-              />
-              <Button
-                class="min-w-2/12 bg-main-color"
-                @click="deleteHeader(header.id)"
-                >✖</Button
-              >
+              <Input class="w-6/12" placeholder="value" v-model="header.value" />
+              <Button class="min-w-2/12 bg-main-color" @click="deleteHeader(header.id)">✖</Button>
             </div>
             <div class="mt-3 hr" />
           </div>
@@ -35,6 +27,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { defineComponent } from "vue";
 import Button from "@/components/UI/Button.vue";
 import { Mutations } from "../../../store/mutations";
+import { nanoid } from 'nanoid'
 
 export default defineComponent({
   components: {
@@ -59,7 +52,7 @@ export default defineComponent({
       this.headers.push({
         key: "",
         value: "",
-        id: Date.now(),
+        id: nanoid()
       });
     },
 

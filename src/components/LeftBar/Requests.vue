@@ -1,29 +1,19 @@
 <template>
   <ul>
-    <li
-      v-for="request in requests"
-      class="px-5 py-2 flex justify-between Request items-center"
-      @click="setActiveRequest(request)"
-      :class="{
+    <li v-for="request in requests" class="px-5 py-2 flex justify-between Request items-center"
+      @click="setActiveRequest(request)" :class="{
         Request__active: getActiveRequest?.id === request.id,
-      }"
-    >
+      }">
       <div class="flex gap-2 items-center">
         <RequestMethod :method="request.method" />
         <p>{{ request.name }}</p>
       </div>
 
-      <Button
-        @click.stop="deleteRequest(request.id, request.folder_id)"
-        class="text-red-500 Button px-2 py-1 rounded-md"
-        >✖</Button
-      >
+      <Button @click.stop="deleteRequest(request.id, request.folder_id)"
+        class="text-red-500 Button px-2 py-1 rounded-md">✖</Button>
     </li>
 
-    <li
-      v-if="!requests.length"
-      class="px-5 py-2 flex justify-between Request items-center"
-    >
+    <li v-if="!requests.length" class="px-5 py-2 flex justify-between Request items-center">
       No requests on this folder
     </li>
   </ul>
@@ -37,9 +27,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { Mutations } from "../../store/mutations";
 
 export default defineComponent({
-  props: {
-    requests: Array,
-  },
+  props: { requests: Array },
   components: { RequestMethod, Button },
 
   methods: {
@@ -83,6 +71,7 @@ export default defineComponent({
 .Request__active {
   background-color: var(--main-color);
 }
+
 .Request__active:hover {
   background-color: var(--second-color);
 }

@@ -9,33 +9,17 @@
         </p>
 
         <div v-else @click.stop>
-          <Input
-            placeholder="Enter folder name"
-            v-model.trim="folderName"
-            @keydown.enter="setEditModeInactive"
-          />
+          <Input placeholder="Enter folder name" v-model.trim="folderName" @keydown.enter="setEditModeInactive" />
         </div>
       </div>
 
       <div @click.stop class="flex gap-2">
-        <Button
-          v-if="!isEditMode"
-          @click="setEditModeActive"
-          class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
-          >&#9998;</Button
-        >
-        <Button
-          v-else
-          @click="setEditModeInactive"
-          class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
-          >💾</Button
-        >
+        <Button v-if="!isEditMode" @click="setEditModeActive"
+          class="hover:text-yellow-500 Button px-2 py-1 rounded-md">&#9998;</Button>
+        <Button v-else @click="setEditModeInactive"
+          class="hover:text-yellow-500 Button px-2 py-1 rounded-md">💾</Button>
 
-        <Button
-          @click="deleteCurrentFolder"
-          class="hover:text-red-500 Button px-2 py-1 rounded-md"
-          >✖</Button
-        >
+        <Button @click="deleteCurrentFolder" class="hover:text-red-500 Button px-2 py-1 rounded-md">✖</Button>
       </div>
     </div>
     <Transition name="requests">
@@ -87,9 +71,7 @@ export default defineComponent({
     },
 
     deleteCurrentFolder() {
-      this[Mutations.deleteFolder]({
-        folder_id: this.folder.id,
-      });
+      this[Mutations.deleteFolder]({ folder_id: this.folder.id });
       this.clearActiveRequest();
     },
 
@@ -112,20 +94,25 @@ export default defineComponent({
 .Folder {
   background-color: var(--second-bg-color);
 }
+
 .Folder:hover {
   background-color: var(--border-color);
 }
+
 .Button {
   background: transparent;
   border-color: transparent;
 }
+
 .Button:hover {
   background-color: var(--main-bg-color);
 }
+
 .requests-enter-active,
 .requests-leave-active {
   transition: 0.2s ease-in-out;
 }
+
 .requests-enter-from,
 .requests-leave-to {
   opacity: 0;

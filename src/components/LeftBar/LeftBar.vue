@@ -3,6 +3,7 @@
     <Folders />
   </div>
 </template>
+
 <script>
 import { defineComponent } from "vue";
 import Folders from "./Folders.vue";

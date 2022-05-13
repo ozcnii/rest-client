@@ -28,6 +28,8 @@ import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
+import { Mutations } from './store/mutations'
+import { getActiveRequest, getFolders, getNotActiveRequest } from './helpers/localStorage';
 
 export default defineComponent({
   components: {
@@ -39,15 +41,17 @@ export default defineComponent({
     HeaderForm,
   },
   beforeMount() {
-    // const params = JSON.parse(localStorage.getItem("params"));
-    // const headers = JSON.parse(localStorage.getItem("headers"));
-    // const body = JSON.parse(localStorage.getItem("body"));
-    // if (params) this.setParams(params);
-    // if (headers) this.setHeaders(headers);
-    // if (body) this.setBody(body);
+    const folders = getFolders();
+    if (Array.isArray(folders)) this[Mutations.SET_FOLDERS](folders);
+
+    const activeRequest = getActiveRequest();
+    if (activeRequest) this[Mutations.SET_ACTIVE_REQUEST](activeRequest);
+
+    const notActiveRequest = getNotActiveRequest();
+    if (notActiveRequest) this[Mutations.SET_NOT_ACTIVE_REQUEST](notActiveRequest);
   },
   methods: {
-    ...mapMutations(["setParams", "setHeaders", "setBody"]),
+    ...mapMutations([`${Mutations.SET_FOLDERS}`, `${Mutations.SET_ACTIVE_REQUEST}`, `${Mutations.SET_NOT_ACTIVE_REQUEST}`]),
   },
 });
 </script>

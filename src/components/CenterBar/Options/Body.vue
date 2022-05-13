@@ -1,11 +1,6 @@
 <template>
-  <v-ace-editor
-    v-model:value="body"
-    lang="json"
-    theme="tomorrow_night_bright"
-    class="h-full rounded-md"
-    :options="{ useWorker: true }"
-  />
+  <v-ace-editor v-model:value="body" lang="json" theme="tomorrow_night_bright" class="h-full rounded-md"
+    :options="{ useWorker: true }" />
 </template>
 
 <script>
@@ -52,6 +47,7 @@ export default defineComponent({
         ...this.getActiveRequest,
         body: this.body,
       };
+
       this[Mutations.SAVE_REQUEST](newRequest);
       this[Mutations.SET_ACTIVE_REQUEST](newRequest);
     },
