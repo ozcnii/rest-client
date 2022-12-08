@@ -3,7 +3,7 @@ import {
   saveActiveRequest,
   saveFolders,
   saveNotActiveRequest,
-} from "../helpers/localStorage";
+} from "../utils/localStorage";
 
 export const Mutations = {
   setRequestResult: "setRequestResult",

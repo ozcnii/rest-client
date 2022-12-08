@@ -1,41 +1,15 @@
 <template>
   <div class="header-wrapper p-3">
-    <WithActiveRequest v-if="getActiveRequest" />
+    <WithActiveRequest v-if="requestStore.activeRequest" />
     <WithoutActiveRequest v-else />
   </div>
 </template>
 
-<script>
-import Input from "../UI/Input.vue";
-import Select from "../UI/Select.vue";
-import Button from "../UI/Button.vue";
-import { mapGetters } from "vuex";
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { useRequestStore } from "@/store/request";
+
 import WithActiveRequest from "./WithActiveRequest.vue";
 import WithoutActiveRequest from "./WithoutActiveRequest.vue";
 
-export default defineComponent({
-  components: {
-    Input,
-    Select,
-    Button,
-    WithActiveRequest,
-    WithoutActiveRequest,
-  },
-
-  computed: {
-    ...mapGetters(["getActiveRequest"]),
-  },
-});
+const requestStore = useRequestStore();
 </script>
-
-<style scoped>
-.header-wrapper {
-  z-index: 1;
-  background-color: var(--main-bg-color);
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-}
-</style>

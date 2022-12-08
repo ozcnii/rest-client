@@ -1,12 +1,17 @@
 <template>
-  <v-ace-editor v-model:value="body" lang="json" theme="tomorrow_night_bright" class="h-full rounded-md"
-    :options="{ useWorker: true }" />
+  <v-ace-editor
+    v-model:value="body"
+    lang="json"
+    theme="tomorrow_night_bright"
+    class="h-full rounded-md"
+    :options="{ useWorker: true }"
+  />
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import { mapGetters, mapMutations } from "vuex";
-import { Mutations } from "./../../../store/mutations";
+import { Mutations } from "./../../../store.old/mutations";
 import { VAceEditor } from "vue3-ace-editor";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-tomorrow_night_bright";
@@ -26,8 +31,7 @@ export default defineComponent({
     else {
       const body = this.getNotActiveRequest?.body;
       try {
-        if (body)
-          this.body = JSON.stringify(JSON.parse(body), null, this.jsonTabSize);
+        if (body) this.body = JSON.stringify(JSON.parse(body), null, this.jsonTabSize);
       } catch (error) {
         if (body) this.body = body;
       }
@@ -76,12 +80,7 @@ export default defineComponent({
         const body = value?.body;
         if (body) this.body = body;
         try {
-          if (body)
-            this.body = JSON.stringify(
-              JSON.parse(body),
-              null,
-              this.jsonTabSize
-            );
+          if (body) this.body = JSON.stringify(JSON.parse(body), null, this.jsonTabSize);
         } catch (error) {
           if (body) this.body = body;
         } finally {

@@ -6,29 +6,42 @@
           <div class="mb-5 flex justify-center gap-3 items-center flex-col">
             <p>Select folder or</p>
             <form @submit.prevent="createFolderHandler">
-              <Input placeholder="Enter new folder name " v-model.trim="folderName" required class="rounded-r-none" />
+              <Input
+                placeholder="Enter new folder name "
+                v-model.trim="folderName"
+                required
+                class="rounded-r-none"
+              />
               <Button class="Button rounded-l-none">Create new folder</Button>
             </form>
           </div>
           <ul class="flex flex-col gap-3">
-            <li v-for="folder in getFolders" class="Folder__item rounded-md p-3 cursor-pointer flex items-center gap-3"
-              @click="selectFolder(folder.id)">
+            <li
+              v-for="folder in foldersStore.folders"
+              class="Folder__item rounded-md p-3 cursor-pointer flex items-center gap-3"
+              @click="selectFolder(folder.id)"
+            >
               <FolderIcon :isOpen="false" />
               <p>
                 {{ folder.name }}
               </p>
             </li>
 
-            <div v-if="!getFolders.length" class="text-center">
+            <div v-if="!foldersStore.folders.length" class="text-center">
               No saved folders
             </div>
           </ul>
           <div v-if="requestNamePopoup" class="Modal__wrapper" @click="closePopout">
             <div class="Modal__content--wrapper">
               <div class="Popout__content p-3 rounded-md" @click.stop>
-                <form @submit.prevent="createRequest">
-                  <Input autofocus placeholder="Enter new request name " v-model.trim="requestName" required
-                    class="rounded-r-none" />
+                <form @submit.prevent="createRequestHandler">
+                  <Input
+                    autofocus
+                    placeholder="Enter new request name "
+                    v-model.trim="requestName"
+                    required
+                    class="rounded-r-none"
+                  />
                   <Button class="Button rounded-l-none">Create request</Button>
                 </form>
               </div>
@@ -40,88 +53,75 @@
   </teleport>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
+import { nanoid } from "nanoid";
+
+import { useFoldersStore } from "@/store/folders";
+import { Methods, MyRequest, useRequestStore } from "@/store/request";
+
 import Input from "../UI/Input.vue";
 import Button from "../UI/Button.vue";
-import { mapGetters, mapMutations } from "vuex";
 import FolderIcon from "../LeftBar/FolderIcon.vue";
-import { Mutations } from "../../store/mutations";
-import { nanoid } from 'nanoid'
 
-export default defineComponent({
-  emits: ["close"],
+interface Emits {
+  (e: "close"): void;
+}
 
-  data() {
-    return {
-      folderName: "",
-      requestName: "",
-      requestNamePopoup: false,
-      selectedFolderId: 0,
-    };
-  },
+const emit = defineEmits<Emits>();
 
-  methods: {
-    ...mapMutations([
-      `${Mutations.createFolder}`,
-      `${Mutations.CREATE_REQUEST}`,
-      `${Mutations.SET_NOT_ACTIVE_REQUEST}`,
-      `${Mutations.SET_ACTIVE_REQUEST}`,
-      `${Mutations.OPEN_FOLDER}`,
-    ]),
+const foldersStore = useFoldersStore();
+const requestStore = useRequestStore();
 
-    createRequest() {
-      if (this.requestName.trim()) {
-        const folder_id = this.selectedFolderId;
-        const request = {
-          ...this.getNotActiveRequest,
-          method: this.getNotActiveRequest?.method || "GET",
-          name: this.requestName,
-          id: nanoid(),
-          folder_id,
-        };
+const folderName = ref("");
+const requestName = ref("");
+const requestNamePopoup = ref(false);
+const selectedFolderId = ref("");
 
-        this[Mutations.CREATE_REQUEST]({
-          folder_id,
-          request,
-        });
+function createRequestHandler() {
+  if (!requestName.value.trim()) {
+    return;
+  }
 
-        this.closeHandler();
-        this[Mutations.SET_NOT_ACTIVE_REQUEST](null);
-        this[Mutations.SET_ACTIVE_REQUEST](request);
-        this[Mutations.OPEN_FOLDER](folder_id);
-      }
-    },
+  const folder_id = selectedFolderId.value;
 
-    createFolderHandler() {
-      if (this.folderName.trim()) {
-        this[Mutations.createFolder]({
-          name: this.folderName,
-        });
-        this.folderName = "";
-      }
-    },
+  const request: MyRequest = {
+    ...requestStore.notActiveRequest,
+    url: requestStore.notActiveRequest?.url || "",
+    method: requestStore.notActiveRequest?.method || Methods.GET,
+    name: requestName.value,
+    id: nanoid(),
+    folder_id,
+  };
 
-    selectFolder(folder_id) {
-      this.requestNamePopoup = true;
-      this.selectedFolderId = folder_id;
-    },
+  foldersStore.createRequest(folder_id, request);
+  closeHandler();
 
-    closeHandler() {
-      this.$emit("close");
-    },
+  requestStore.setActiveRequest(request);
+  foldersStore.openFolder(folder_id);
+}
 
-    closePopout() {
-      this.requestNamePopoup = false;
-    },
-  },
+function createFolderHandler() {
+  if (!folderName.value.trim()) {
+    return;
+  }
 
-  computed: {
-    ...mapGetters(["getFolders", "getNotActiveRequest"]),
-  },
+  foldersStore.createFolder(folderName.value);
+  folderName.value = "";
+}
 
-  components: { Input, Button, FolderIcon },
-});
+function selectFolder(folder_id: string) {
+  requestNamePopoup.value = true;
+  selectedFolderId.value = folder_id;
+}
+
+function closeHandler() {
+  emit("close");
+}
+
+function closePopout() {
+  requestNamePopoup.value = false;
+}
 </script>
 
 <style scoped>

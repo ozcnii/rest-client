@@ -54,3 +54,26 @@ body {
   background-color: var(--main-color);
   border: 1px solid var(--main-color);
 }
+
+.bg-main {
+  background-color: var(--main-bg-color);
+}
+
+.header-wrapper {
+  z-index: 1;
+  background-color: var(--main-bg-color);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.button {
+  width: 15%;
+  background-color: var(--main-color);
+}
+
+.Options__item {
+  background-color: var(--second-bg-color);
+  border: 1px solid var(--border-color);
+}

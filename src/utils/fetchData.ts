@@ -1,34 +1,46 @@
 import axios from "axios";
+import { Methods, MyNotActiveRequest, MyRequest } from "../store/request";
+import { ConfiguredOptions } from "./types";
 
-export const fetchData = async (request) => {
+export const fetchData = async (request: MyNotActiveRequest) => {
   const { url, method } = request;
-  const configuredOptions = {
+
+  const configuredOptions: ConfiguredOptions = {
     params: {},
     headers: {},
-    body: request?.body || {},
+    body: request?.body ?? {},
   };
 
-  request?.params?.forEach((q) => {
-    configuredOptions.params[q.key] = q.value;
-  });
+  if (request.params) {
+    request.params.forEach(({ key, value }) => {
+      configuredOptions.params[key] = value;
+    });
+  }
 
-  request?.headers?.forEach((q) => {
-    if (q.key) configuredOptions.headers[q.key] = q.value;
-  });
+  if (request.headers) {
+    request.headers.forEach(({ key, value }) => {
+      if (key) {
+        configuredOptions.headers[key] = value;
+      }
+    });
+  }
 
   switch (method) {
-    case "GET":
+    case Methods.GET: {
       return await axios.get(url, configuredOptions);
-    case "POST":
+    }
+
+    case Methods.POST: {
       return axios.post(url, configuredOptions.body, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", // TODO
           ...configuredOptions.headers,
         },
         params: configuredOptions.params,
       });
+    }
 
-    case "PUT":
+    case Methods.PUT: {
       return axios.put(url, configuredOptions.body, {
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +48,9 @@ export const fetchData = async (request) => {
         },
         params: configuredOptions.params,
       });
-    case "PATCH":
+    }
+
+    case Methods.PATCH: {
       return axios.patch(url, configuredOptions.body, {
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +58,9 @@ export const fetchData = async (request) => {
         },
         params: configuredOptions.params,
       });
-    case "DELETE":
+    }
+
+    case Methods.DELETE: {
       return axios.delete(url, {
         data: configuredOptions.body,
         headers: {
@@ -53,7 +69,9 @@ export const fetchData = async (request) => {
         },
         params: configuredOptions.params,
       });
+    }
+
     default:
-      throw new Error("internal error");
+      throw new Error("IDK");
   }
 };

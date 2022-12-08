@@ -1,19 +1,29 @@
 <template>
   <ul>
-    <li v-for="request in requests" class="px-5 py-2 flex justify-between Request items-center"
-      @click="setActiveRequest(request)" :class="{
+    <li
+      v-for="request in requests"
+      class="px-5 py-2 flex justify-between Request items-center"
+      @click="setActiveRequest(request)"
+      :class="{
         Request__active: getActiveRequest?.id === request.id,
-      }">
+      }"
+    >
       <div class="flex gap-2 items-center">
         <RequestMethod :method="request.method" />
         <p>{{ request.name }}</p>
       </div>
 
-      <Button @click.stop="deleteRequest(request.id, request.folder_id)"
-        class="text-red-500 Button px-2 py-1 rounded-md">✖</Button>
+      <Button
+        @click.stop="deleteRequest(request.id, request.folder_id)"
+        class="text-red-500 Button px-2 py-1 rounded-md"
+        >✖</Button
+      >
     </li>
 
-    <li v-if="!requests.length" class="px-5 py-2 flex justify-between Request items-center">
+    <li
+      v-if="!requests.length"
+      class="px-5 py-2 flex justify-between Request items-center"
+    >
       No requests on this folder
     </li>
   </ul>
@@ -24,7 +34,7 @@ import { defineComponent } from "vue";
 import RequestMethod from "./RequestMethod.vue";
 import Button from "@/components/UI/Button.vue";
 import { mapGetters, mapMutations } from "vuex";
-import { Mutations } from "../../store/mutations";
+import { Mutations } from "../../store.old/mutations";
 
 export default defineComponent({
   props: { requests: Array },

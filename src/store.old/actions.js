@@ -1,13 +1,8 @@
-import { fetchData } from "./../helpers";
+import { fetchData } from "../utils/fetchData";
 import { Mutations } from "./mutations";
 
-const {
-  setLoading,
-  setError,
-  setRequestResult,
-  setStatusCode,
-  setRequestTime,
-} = Mutations;
+const { setLoading, setError, setRequestResult, setStatusCode, setRequestTime } =
+  Mutations;
 
 export const actions = {
   async getRrequest({ commit, state }) {

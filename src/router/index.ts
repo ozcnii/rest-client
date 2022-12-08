@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import BodyVue from "../components/CenterBar/Options/Body.vue";
 import HeadersVue from "../components/CenterBar/Options/Headers.vue";
 import QueryParamsVue from "../components/CenterBar/Options/QueryParams.vue";
 
-const router = createRouter({
+export const router = createRouter({
   routes: [
     {
       path: "/",
@@ -26,7 +26,5 @@ const router = createRouter({
       meta: { keepAlive: true },
     },
   ],
-  history: createWebHistory(),
+  history: createWebHashHistory(),
 });
-
-export { router };

@@ -9,17 +9,33 @@
         </p>
 
         <div v-else @click.stop>
-          <Input placeholder="Enter folder name" v-model.trim="folderName" @keydown.enter="setEditModeInactive" />
+          <Input
+            placeholder="Enter folder name"
+            v-model.trim="folderName"
+            @keydown.enter="setEditModeInactive"
+          />
         </div>
       </div>
 
       <div @click.stop class="flex gap-2">
-        <Button v-if="!isEditMode" @click="setEditModeActive"
-          class="hover:text-yellow-500 Button px-2 py-1 rounded-md">&#9998;</Button>
-        <Button v-else @click="setEditModeInactive"
-          class="hover:text-yellow-500 Button px-2 py-1 rounded-md">💾</Button>
+        <Button
+          v-if="!isEditMode"
+          @click="setEditModeActive"
+          class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
+          >&#9998;</Button
+        >
+        <Button
+          v-else
+          @click="setEditModeInactive"
+          class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
+          >💾</Button
+        >
 
-        <Button @click="deleteCurrentFolder" class="hover:text-red-500 Button px-2 py-1 rounded-md">✖</Button>
+        <Button
+          @click="deleteCurrentFolder"
+          class="hover:text-red-500 Button px-2 py-1 rounded-md"
+          >✖</Button
+        >
       </div>
     </div>
     <Transition name="requests">
@@ -37,7 +53,7 @@ import FolderIcon from "./FolderIcon.vue";
 import Input from "@/components/UI/Input.vue";
 import Button from "@/components/UI/Button.vue";
 import { mapMutations } from "vuex";
-import { Mutations } from "../../store/mutations";
+import { Mutations } from "../../store.old/mutations";
 
 export default defineComponent({
   props: {

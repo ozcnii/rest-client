@@ -19,42 +19,33 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted, watch } from "vue";
+import { Methods } from "@/store/request";
 
-export default defineComponent({
-  props: {
-    options: {
-      type: Array,
-      required: true,
-    },
-    default: {
-      type: String,
-      required: false,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      selected: this.default
-        ? this.default
-        : this.options.length > 0
-        ? this.options[0]
-        : null,
-      open: false,
-    };
-  },
+interface Props {
+  options: Methods[];
+  default?: Methods;
+}
 
-  watch: {
-    default: {
-      handler(value) {
-        this.selected = value;
-      },
-    },
-  },
-  mounted() {
-    this.$emit("input", this.selected);
-  },
+interface Emits {
+  (e: "input", value: Methods): void;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
+
+const open = ref(false);
+const selected = ref<Methods | null>(
+  props.default ? props.default : props.options.length > 0 ? props.options[0] : null
+);
+
+watch(props, (value) => {
+  selected.value = value.default ?? Methods.GET;
+});
+
+onMounted(() => {
+  emit("input", selected.value ?? Methods.GET);
 });
 </script>
 

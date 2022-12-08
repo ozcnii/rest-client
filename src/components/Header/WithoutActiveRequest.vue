@@ -1,9 +1,9 @@
 <template>
   <div class="header-wrapper p-3">
-    <form class="header-form flex" @submit.prevent="getRrequest">
+    <form class="header-form flex" @submit.prevent="requestStore.getRequest">
       <Select
         class="select"
-        :options="httpMethods"
+        :options="requestStore.httpMethods"
         :default="method"
         @input="setMethod"
       />
@@ -16,9 +16,7 @@
         placeholder="URL"
       />
 
-      <Button
-        @click="saveRequest"
-        class="rounded-r-none rounded-l-none Options__item"
+      <Button @click="saveRequest" class="rounded-r-none rounded-l-none Options__item"
         >save</Button
       >
       <Button class="button rounded-l-none"> Send </Button>
@@ -28,111 +26,60 @@
   <SaveRequestModal v-if="isShowModal" @close="closeModal" />
 </template>
 
-<script>
+<script lang="ts" setup>
+import { ref, watch } from "vue";
+
+import { useRequestStore, Methods, MyNotActiveRequest } from "@/store/request";
+
 import Input from "../UI/Input.vue";
 import Select from "../UI/Select.vue";
 import Button from "../UI/Button.vue";
-import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
-import { defineComponent } from "vue";
-import { Mutations } from "../../store/mutations";
 import SaveRequestModal from "./SaveRequestModal.vue";
 
-export default defineComponent({
-  components: {
-    Input,
-    Select,
-    Button,
-    SaveRequestModal,
-  },
+const requestStore = useRequestStore();
 
-  data() {
-    return {
-      url: "",
-      method: "GET",
-      isShowModal: false,
-    };
-  },
+const url = ref(requestStore.notActiveRequest?.url || "");
+const method = ref(requestStore.notActiveRequest?.method || Methods.GET);
+const isShowModal = ref(false);
 
-  mounted() {
-    this.url = this.getNotActiveRequest?.url || "";
-    this.method = this.getNotActiveRequest?.method || "GET";
-  },
+function saveRequest() {
+  if (url.value.trim()) {
+    openModal();
+  }
+}
 
-  methods: {
-    ...mapMutations([`${Mutations.SET_NOT_ACTIVE_REQUEST}`]),
-    ...mapActions(["getRrequest"]),
+function openModal() {
+  isShowModal.value = true;
+}
 
-    saveRequest() {
-      if (this.url.trim()) this.openModal();
-    },
+function closeModal() {
+  isShowModal.value = false;
+}
 
-    openModal() {
-      this.isShowModal = true;
-    },
+function setMethod(value: Methods) {
+  method.value = value;
+}
 
-    closeModal() {
-      this.isShowModal = false;
-    },
+function setUrl(value: string) {
+  url.value = value;
+}
 
-    setMethod(method) {
-      this.method = method;
-    },
+function saveNotActiveRequest() {
+  const newRequest: MyNotActiveRequest = {
+    ...requestStore.notActiveRequest,
+    method: method.value,
+    url: url.value,
+  };
 
-    setUrl(url) {
-      this.url = url;
-    },
+  requestStore.setNotActiveRequest(newRequest);
+}
 
-    saveNotActiveRequest() {
-      const request = {
-        ...this.getNotActiveRequest,
-        url: this.url,
-        method: this.method,
-      };
-      this[Mutations.SET_NOT_ACTIVE_REQUEST](request);
-    },
-  },
-
-  computed: {
-    ...mapGetters(["getNotActiveRequest"]),
-    ...mapState(["httpMethods"]),
-  },
-
-  watch: {
-    url: {
-      handler() {
-        this.saveNotActiveRequest();
-      },
-    },
-    method: {
-      handler() {
-        this.saveNotActiveRequest();
-      },
-    },
-  },
-});
+watch(url, saveNotActiveRequest);
+watch(method, saveNotActiveRequest);
 </script>
 
 <style scoped>
 .select {
   width: 20%;
-}
-
-.button {
-  width: 15%;
-  background-color: var(--main-color);
-}
-
-.Options__item {
-  background-color: var(--second-bg-color);
-  border: 1px solid var(--border-color);
-}
-
-.header-wrapper {
-  z-index: 1;
-  background-color: var(--main-bg-color);
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
 }
 </style>
