@@ -27,8 +27,8 @@ import "splitpanes/dist/splitpanes.css";
 import { getActiveRequest, getFolders, getNotActiveRequest } from "@/utils";
 
 // import CenterBar from "./components/CenterBar/CenterBar.vue";
-// import LeftBar from "./components/LeftBar/LeftBar.vue";
 // import RightBar from "./components/RightBar/RightBar.vue";
+import LeftBar from "@/components/LeftBar/LeftBar.vue";
 import HeaderForm from "@/components/Header/HeaderForm.vue";
 
 import { useFoldersStore } from "@/store/folders";

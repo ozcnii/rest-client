@@ -41,9 +41,9 @@ import { ref } from "vue";
 import { useFoldersStore } from "@/store/folders";
 import { useRequestStore, Methods, MyRequest } from "@/store/request";
 
-import Input from "../UI/Input.vue";
-import Select from "../UI/Select.vue";
-import Button from "../UI/Button.vue";
+import Button from "@/components/UI/Button.vue";
+import Input from "@/components/UI/Input.vue";
+import Select from "@/components/UI/Select.vue";
 
 const foldersStore = useFoldersStore();
 const requestStore = useRequestStore();

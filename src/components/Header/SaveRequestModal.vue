@@ -60,9 +60,9 @@ import { nanoid } from "nanoid";
 import { useFoldersStore } from "@/store/folders";
 import { Methods, MyRequest, useRequestStore } from "@/store/request";
 
-import Input from "../UI/Input.vue";
-import Button from "../UI/Button.vue";
-import FolderIcon from "../LeftBar/FolderIcon.vue";
+import Button from "@/components/UI/Button.vue";
+import Input from "@/components/UI/Input.vue";
+import FolderIcon from "@/components/LeftBar/FolderIcon.vue";
 
 interface Emits {
   (e: "close"): void;

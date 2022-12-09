@@ -46,64 +46,46 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import Requests from "./Requests.vue";
-import FolderIcon from "./FolderIcon.vue";
+<script lang="ts" setup>
+import { ref } from "vue";
+
+import { Folder, useFoldersStore } from "@/store/folders";
+import { useRequestStore } from "@/store/request";
+
+import Requests from "@/components/LeftBar/Requests.vue";
+import FolderIcon from "@/components/LeftBar/FolderIcon.vue";
 import Input from "@/components/UI/Input.vue";
 import Button from "@/components/UI/Button.vue";
-import { mapMutations } from "vuex";
-import { Mutations } from "../../store.old/mutations";
 
-export default defineComponent({
-  props: {
-    folder: Object,
-  },
+interface Props {
+  folder: Folder;
+}
 
-  data() {
-    return {
-      folderName: this.folder.name,
-      isEditMode: false,
-    };
-  },
+const props = defineProps<Props>();
 
-  methods: {
-    setEditModeActive() {
-      this.isEditMode = true;
-    },
+const foldersStore = useFoldersStore();
+const requestStore = useRequestStore();
 
-    setEditModeInactive() {
-      if (this.folderName) {
-        this.isEditMode = false;
-        this.setName();
-      }
-    },
+const folderName = ref(props.folder.name);
+const isEditMode = ref(false);
 
-    setName() {
-      this[Mutations.setFolderName]({
-        folder_id: this.folder.id,
-        name: this.folderName,
-      });
-    },
+function setEditModeActive() {
+  isEditMode.value = true;
+}
 
-    deleteCurrentFolder() {
-      this[Mutations.deleteFolder]({ folder_id: this.folder.id });
-      this.clearActiveRequest();
-    },
+function setEditModeInactive() {
+  if (!folderName.value.trim()) {
+    return;
+  }
 
-    clearActiveRequest() {
-      this[Mutations.SET_ACTIVE_REQUEST](null);
-    },
+  isEditMode.value = false;
+  foldersStore.setFolderName({ folder_id: props.folder.id, name: folderName.value });
+}
 
-    ...mapMutations([
-      `${Mutations.setFolderName}`,
-      `${Mutations.deleteFolder}`,
-      `${[Mutations.SET_ACTIVE_REQUEST]}`,
-    ]),
-  },
-
-  components: { Requests, FolderIcon, Input, Button },
-});
+function deleteCurrentFolder() {
+  foldersStore.deleteFolder(props.folder.id);
+  requestStore.setActiveRequest(null);
+}
 </script>
 
 <style scoped>

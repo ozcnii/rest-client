@@ -8,8 +8,8 @@
 <script lang="ts" setup>
 import { useRequestStore } from "@/store/request";
 
-import WithActiveRequest from "./WithActiveRequest.vue";
-import WithoutActiveRequest from "./WithoutActiveRequest.vue";
+import WithActiveRequest from "@/components/Header/WithActiveRequest.vue";
+import WithoutActiveRequest from "@/components/Header/WithoutActiveRequest.vue";
 
 const requestStore = useRequestStore();
 </script>

@@ -23,12 +23,10 @@
   </svg>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+interface Props {
+  isOpen: boolean;
+}
 
-export default defineComponent({
-  props: {
-    isOpen: Boolean,
-  },
-});
+defineProps<Props>();
 </script>

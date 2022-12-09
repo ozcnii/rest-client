@@ -2,23 +2,23 @@
   <p
     class="font-bold"
     :class="{
-      'text-green-400': method === 'GET',
-      'text-yellow-400': method === 'POST',
-      'text-blue-400': method === 'PUT',
-      'text-purple-400': method === 'PATCH',
-      'text-red-400': method === 'DELETE',
+      'text-green-400': method === Methods.GET,
+      'text-yellow-400': method === Methods.POST,
+      'text-blue-400': method === Methods.PUT,
+      'text-purple-400': method === Methods.PATCH,
+      'text-red-400': method === Methods.DELETE,
     }"
   >
     {{ method }}
   </p>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { Methods } from "@/store/request";
 
-export default defineComponent({
-  props: {
-    method: String,
-  },
-});
+interface Props {
+  method: Methods;
+}
+
+defineProps<Props>();
 </script>

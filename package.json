@@ -18,7 +18,8 @@
     "vue": "^3.2.25",
     "vue-prism-component": "^2.0.0",
     "vue-router": "^4.0.14",
-    "vue3-ace-editor": "^2.2.2"
+    "vue3-ace-editor": "^2.2.2",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

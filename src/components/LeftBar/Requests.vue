@@ -5,7 +5,7 @@
       class="px-5 py-2 flex justify-between Request items-center"
       @click="setActiveRequest(request)"
       :class="{
-        Request__active: getActiveRequest?.id === request.id,
+        Request__active: requestStore.activeRequest?.id === request.id,
       }"
     >
       <div class="flex gap-2 items-center">
@@ -29,44 +29,30 @@
   </ul>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import RequestMethod from "./RequestMethod.vue";
+<script lang="ts" setup>
+import { useFoldersStore } from "@/store/folders";
+import { MyRequest, useRequestStore } from "@/store/request";
+
 import Button from "@/components/UI/Button.vue";
-import { mapGetters, mapMutations } from "vuex";
-import { Mutations } from "../../store.old/mutations";
+import RequestMethod from "./RequestMethod.vue";
 
-export default defineComponent({
-  props: { requests: Array },
-  components: { RequestMethod, Button },
+interface Props {
+  requests: MyRequest[];
+}
 
-  methods: {
-    setActiveRequest(request) {
-      this[Mutations.SET_ACTIVE_REQUEST](request);
-    },
+defineProps<Props>();
 
-    clearActiveRequest() {
-      this.setActiveRequest(null);
-    },
+const requestStore = useRequestStore();
+const foldersStore = useFoldersStore();
 
-    deleteRequest(request_id, folder_id) {
-      this[Mutations.DELETE_REQUEST]({
-        request_id,
-        folder_id,
-      });
-      this.clearActiveRequest();
-    },
+function setActiveRequest(request: MyRequest) {
+  requestStore.setActiveRequest(request);
+}
 
-    ...mapMutations([
-      `${[Mutations.SET_ACTIVE_REQUEST]}`,
-      `${[Mutations.DELETE_REQUEST]}`,
-    ]),
-  },
-
-  computed: {
-    ...mapGetters(["getActiveRequest"]),
-  },
-});
+function deleteRequest(request_id: string, folder_id: string) {
+  foldersStore.deleteRequest(request_id, folder_id);
+  requestStore.setActiveRequest(null);
+}
 </script>
 
 <style scoped>

@@ -9,12 +9,14 @@
       <Button class="rounded-l-none Button">Create</Button>
     </form>
 
-    <div v-if="!folders.length" class="text-center mt-3">No saved folders</div>
+    <div v-if="!foldersStore.folders.length" class="text-center mt-3">
+      No saved folders
+    </div>
 
     <div v-else class="relative mt-3 overflow-y-auto grow w-full">
       <ul class="absolute inset-0">
         <li
-          v-for="folder in folders"
+          v-for="folder in foldersStore.folders"
           @click="toggleIsOpenFolder(folder.id)"
           :key="folder.id"
           class="px-2"
@@ -26,41 +28,29 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import { mapGetters, mapMutations } from "vuex";
-import Folder from "./Folder.vue";
-import Button from "../UI/Button.vue";
-import Input from "../UI/Input.vue";
-import { Mutations } from "../../store.old/mutations";
+<script lang="ts" setup>
+import { ref } from "vue";
 
-export default defineComponent({
-  computed: {
-    ...mapGetters({
-      folders: "getFolders",
-    }),
-  },
+import { useFoldersStore } from "@/store/folders";
 
-  data() {
-    return {
-      newFolderName: "",
-    };
-  },
+import Folder from "@/components/LeftBar/Folder.vue";
+import Button from "@/components/UI/Button.vue";
+import Input from "@/components/UI/Input.vue";
 
-  methods: {
-    toggleIsOpenFolder(id) {
-      this[Mutations.TOGGLE_OPEN_FOLDER](id);
-    },
+const foldersStore = useFoldersStore();
 
-    create() {
-      if (this.newFolderName) {
-        this[Mutations.createFolder]({ name: this.newFolderName });
-        this.newFolderName = "";
-      }
-    },
+const newFolderName = ref("");
 
-    ...mapMutations([`${Mutations.createFolder}`, `${Mutations.TOGGLE_OPEN_FOLDER}`]),
-  },
-  components: { Folder, Button, Input },
-});
+function toggleIsOpenFolder(id: string) {
+  foldersStore.toggleOpenFolder(id);
+}
+
+function create() {
+  if (!newFolderName.value.trim()) {
+    return;
+  }
+
+  foldersStore.createFolder(newFolderName.value);
+  newFolderName.value = "";
+}
 </script>

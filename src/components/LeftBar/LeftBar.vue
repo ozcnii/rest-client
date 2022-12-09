@@ -4,11 +4,6 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-import Folders from "./Folders.vue";
-
-export default defineComponent({
-  components: { Folders },
-});
+<script lang="ts" setup>
+import Folders from "@/components/LeftBar/Folders.vue";
 </script>

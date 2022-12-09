@@ -31,10 +31,10 @@ import { ref, watch } from "vue";
 
 import { useRequestStore, Methods, MyNotActiveRequest } from "@/store/request";
 
-import Input from "../UI/Input.vue";
-import Select from "../UI/Select.vue";
-import Button from "../UI/Button.vue";
-import SaveRequestModal from "./SaveRequestModal.vue";
+import Button from "@/components/UI/Button.vue";
+import Input from "@/components/UI/Input.vue";
+import Select from "@/components/UI/Select.vue";
+import SaveRequestModal from "@/components/Header/SaveRequestModal.vue";
 
 const requestStore = useRequestStore();
 
