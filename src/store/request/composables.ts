@@ -5,9 +5,16 @@ import { initialState } from "./data";
 import { MyNotActiveRequest, MyRequest, ReqeuestState } from "./types";
 
 export const useRequestStore = defineStore("request", {
-  state: (): ReqeuestState => initialState,
+  state: (): ReqeuestState => ({ ...initialState }),
 
   actions: {
+    reset() {
+      for (const key in initialState) {
+        // @ts-ignore
+        this[key] = initialState[key];
+      }
+    },
+
     setRequestResult(result: any) {
       this.requestResult = result;
     },

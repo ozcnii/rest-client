@@ -1,6 +1,7 @@
 <template>
   <ul>
     <li
+      data-testid="requests-list-item"
       v-for="request in requests"
       class="px-5 py-2 flex justify-between Request items-center"
       @click="setActiveRequest(request)"
@@ -22,6 +23,7 @@
 
     <li
       v-if="!requests.length"
+      data-testid="requests-no-requests"
       class="px-5 py-2 flex justify-between Request items-center"
     >
       No requests on this folder

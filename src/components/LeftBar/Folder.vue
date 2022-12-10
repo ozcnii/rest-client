@@ -4,8 +4,8 @@
       <div class="flex gap-3 items-center">
         <FolderIcon :isOpen="folder.isOpen" />
 
-        <p v-if="!isEditMode" class="py-2">
-          {{ folder.name }}
+        <p v-if="!isEditMode" data-testid="folder-name" class="py-2">
+          {{ folderName }}
         </p>
 
         <div v-else @click.stop>
@@ -20,18 +20,21 @@
       <div @click.stop class="flex gap-2">
         <Button
           v-if="!isEditMode"
+          data-testid="folder-edit-disable-button"
           @click="setEditModeActive"
           class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
           >&#9998;</Button
         >
         <Button
           v-else
+          data-testid="folder-edit-enable-button"
           @click="setEditModeInactive"
           class="hover:text-yellow-500 Button px-2 py-1 rounded-md"
           >💾</Button
         >
 
         <Button
+          data-testid="folder-delete-button"
           @click="deleteCurrentFolder"
           class="hover:text-red-500 Button px-2 py-1 rounded-md"
           >✖</Button
@@ -74,7 +77,7 @@ function setEditModeActive() {
 }
 
 function setEditModeInactive() {
-  if (!folderName.value.trim()) {
+  if (!folderName.value) {
     return;
   }
 

@@ -1,24 +1,17 @@
 <template>
-  <p
-    class="font-bold"
-    :class="{
-      'text-green-400': method === Methods.GET,
-      'text-yellow-400': method === Methods.POST,
-      'text-blue-400': method === Methods.PUT,
-      'text-purple-400': method === Methods.PATCH,
-      'text-red-400': method === Methods.DELETE,
-    }"
-  >
+  <p :class="`font-bold text-${color}-400`" z>
     {{ method }}
   </p>
 </template>
 
 <script lang="ts" setup>
 import { Methods } from "@/store/request";
+import { methodColors } from "@/utils";
 
 interface Props {
   method: Methods;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const color = methodColors[props.method];
 </script>

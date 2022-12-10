@@ -1,6 +1,10 @@
 <template>
   <div class="grow w-full flex flex-col">
-    <form class="w-full flex justify-center items-center" @submit.prevent="create">
+    <form
+      data-testid="folders-create-form"
+      class="w-full flex justify-center items-center"
+      @submit.prevent="create"
+    >
       <Input
         placeholder="New folder name"
         v-model.trim="newFolderName"
@@ -46,7 +50,7 @@ function toggleIsOpenFolder(id: string) {
 }
 
 function create() {
-  if (!newFolderName.value.trim()) {
+  if (!newFolderName.value) {
     return;
   }
 

@@ -6,7 +6,7 @@ import { initialState } from "./data";
 import { FoldersState, Folder } from "./types";
 
 export const useFoldersStore = defineStore("folders", {
-  state: (): FoldersState => initialState,
+  state: (): FoldersState => ({ ...initialState }),
 
   actions: {
     setFolderName({ folder_id, name }: { folder_id: string; name: string }) {
@@ -18,6 +18,10 @@ export const useFoldersStore = defineStore("folders", {
 
       currentFolder.name = name;
       saveFolders(this.folders);
+    },
+
+    reset() {
+      this.folders = [...initialState.folders];
     },
 
     deleteFolder(folder_id: string) {
