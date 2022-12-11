@@ -8,6 +8,7 @@ import { useFoldersStore } from "@/store/folders";
 import RootComponent from "@/components/LeftBar/LeftBar.vue";
 import FolderVue from "@/components/LeftBar/Folder.vue";
 import { useRequestStore } from "@/store/request";
+import { initialState } from "@/store/folders/data";
 
 const newFolderNameInputPlaceholder = "[placeholder='New folder name']";
 const foldersCreateFormId = "[data-testid='folders-create-form']";
@@ -74,8 +75,6 @@ describe("LeftBar", () => {
 
     expect(requestsInFolderBefore).toBe(0);
     expect(requestsInFolderAfter).toBe(foldersStore.folders[0].requests.length);
-
-    await currentFolder.trigger("click");
   });
 
   it("new folder have 0 requests", async () => {
@@ -94,8 +93,6 @@ describe("LeftBar", () => {
     expect(requests.length).toBe(0);
     expect(noRequestsItem.exists()).toBeTruthy();
     expect(noRequestsItem.text()).toBe("No requests on this folder");
-
-    await newFolder.trigger("click");
   });
 
   it("set active request", async () => {
@@ -108,7 +105,5 @@ describe("LeftBar", () => {
     expect(requestStore.activeRequest?.name).toBe(
       foldersStore.folders[0].requests[0].name
     );
-
-    await currentFolder.trigger("click");
   });
 });

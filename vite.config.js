@@ -12,6 +12,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  test: {
+    coverage: {
+      provider: "c8",
+    },
+  },
   /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
   resolve: {
     extensions: [

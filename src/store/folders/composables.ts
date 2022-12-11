@@ -9,6 +9,19 @@ export const useFoldersStore = defineStore("folders", {
   state: (): FoldersState => ({ ...initialState }),
 
   actions: {
+    reset() {
+      this.folders = [];
+
+      for (let i = 0; i < initialState.folders.length; i++) {
+        // @ts-ignore
+        this.folders[i] = {};
+        for (const key in initialState.folders[i]) {
+          // @ts-ignore
+          this.folders[i][key] = initialState.folders[i][key];
+        }
+      }
+    },
+
     setFolderName({ folder_id, name }: { folder_id: string; name: string }) {
       const currentFolder = this.folders.find((folder) => folder.id == folder_id);
 
@@ -18,10 +31,6 @@ export const useFoldersStore = defineStore("folders", {
 
       currentFolder.name = name;
       saveFolders(this.folders);
-    },
-
-    reset() {
-      this.folders = [...initialState.folders];
     },
 
     deleteFolder(folder_id: string) {

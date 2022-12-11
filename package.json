@@ -6,8 +6,9 @@
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
-    "test:unit": "vitest --environment jsdom --root src/",
-    "preview": "vite preview"
+    "test": "vitest --environment jsdom --root src/",
+    "preview": "vite preview",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "ace-builds": "^1.4.14",
@@ -26,6 +27,7 @@
     "@pinia/testing": "^0.0.14",
     "@types/axios": "^0.14.0",
     "@vitejs/plugin-vue": "^2.2.0",
+    "@vitest/coverage-c8": "^0.25.7",
     "@vue/test-utils": "^2.2.6",
     "autoprefixer": "^10.4.4",
     "jsdom": "^20.0.3",
