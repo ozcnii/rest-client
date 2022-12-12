@@ -63,7 +63,6 @@ export const useRequestStore = defineStore("request", {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           this.setStatusCode(error.response?.status ?? -1);
-          this.setRequestResult(null);
 
           const errorRaw =
             error.response?.data || error.response?.statusText || error.message;

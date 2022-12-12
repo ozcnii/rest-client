@@ -8,7 +8,6 @@ import { useFoldersStore } from "@/store/folders";
 import RootComponent from "@/components/LeftBar/LeftBar.vue";
 import FolderVue from "@/components/LeftBar/Folder.vue";
 import { useRequestStore } from "@/store/request";
-import { initialState } from "@/store/folders/data";
 
 const newFolderNameInputPlaceholder = "[placeholder='New folder name']";
 const foldersCreateFormId = "[data-testid='folders-create-form']";
