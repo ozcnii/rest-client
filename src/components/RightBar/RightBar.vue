@@ -1,44 +1,49 @@
 <template>
   <div class="h-full grow flex flex-col relative">
-    <LoadigModal v-if="isLoading" />
+    <LoadigModal v-if="requestStore.isLoading" />
 
-    <div v-if="requestResult && requestTime" class="grow flex flex-col">
+    <div
+      v-if="requestStore.requestResult && requestStore.requestTime"
+      class="grow flex flex-col"
+    >
       <div class="mb-3 flex gap-3">
-        <div class="px-4 rounded-md py-2 result-item">{{ requestTime }} ms</div>
+        <div class="px-4 rounded-md py-2 result-item">
+          {{ requestStore.requestTime }} ms
+        </div>
 
         <div class="px-4 rounded-md py-2 bg-green-600">
-          {{ statusCode }}
+          {{ requestStore.statusCode }}
         </div>
       </div>
 
       <div class="mr-3 relative overflow-y-auto h-full w-full">
         <div class="absolute inset-0 pr-2">
           <Prism language="javascript" class="prism rounded-md">
-            {{ requestResult }}
+            {{ requestStore.requestResult }}
           </Prism>
         </div>
       </div>
     </div>
 
-    <div v-if="error && requestTime && !isLoading">
+    <div v-if="requestStore.error && requestStore.requestTime && !requestStore.isLoading">
       <div class="flex mb-3">
         <div class="px-4 rounded-md py-2 mr-3 result-item">
-          {{ requestTime }} ms
+          {{ requestStore.requestTime }} ms
         </div>
         <div class="px-4 rounded-md bg-red-500 py-2 mr-3">
-          {{ statusCode }}
+          {{ requestStore.statusCode }}
         </div>
       </div>
 
       <div class="result-item rounded-md p-3">
         <Prism language="javascript" class="prism rounded-md">
-          {{ error }}
+          {{ requestStore.error }}
         </Prism>
       </div>
     </div>
 
     <div
-      v-if="!requestResult && !error && !isLoading"
+      v-if="!requestStore.requestResult && !requestStore.error && !requestStore.isLoading"
       class="text-3xl flex justify-center items-center h-full"
     >
       Hello!
@@ -46,28 +51,13 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+// @ts-ignore
 import Prism from "vue-prism-component";
-import LoadigModal from "./LoadigModal.vue";
-import { mapState } from "vuex";
+import { useRequestStore } from "@/store/request";
+import LoadigModal from "@/components/RightBar/LoadigModal.vue";
 
-export default defineComponent({
-  components: {
-    Prism,
-    LoadigModal,
-  },
-
-  computed: {
-    ...mapState([
-      "isLoading",
-      "requestResult",
-      "error",
-      "statusCode",
-      "requestTime",
-    ]),
-  },
-});
+const requestStore = useRequestStore();
 </script>
 
 <style scoped>
