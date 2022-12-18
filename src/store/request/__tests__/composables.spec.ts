@@ -1,8 +1,9 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { nanoid } from "nanoid";
 
-import { useRequestStore, Methods, MyRequest } from "@/store/request";
+import { useRequestStore, Methods, MyRequest, MyNotActiveRequest } from "@/store/request";
+import axios, { AxiosError } from "axios";
 
 describe("useRequestStore", () => {
   let store: ReturnType<typeof useRequestStore>;
@@ -11,6 +12,8 @@ describe("useRequestStore", () => {
     setActivePinia(createPinia());
     store = useRequestStore();
     store.reset();
+
+    vi.restoreAllMocks();
   });
 
   it("set request result", () => {
@@ -79,5 +82,64 @@ describe("useRequestStore", () => {
   it("set nullable not active request", () => {
     store.setNotActiveRequest(null);
     expect(store.notActiveRequest).toBeNull();
+  });
+
+  it("get request success", async () => {
+    const data = "some-data";
+    const status = 200;
+
+    const spy = vi.spyOn(axios, "get").mockImplementation(async () => {
+      return { data, status };
+    });
+
+    const request: MyNotActiveRequest = {
+      method: Methods.GET,
+      url: "aaa.com",
+    };
+
+    store.setNotActiveRequest(request);
+
+    await store.getRequest();
+
+    expect(spy).toHaveBeenCalled();
+    expect(store.error).toBeNull();
+
+    expect(store.requestResult).toBe(data);
+    expect(store.statusCode).toBe(status);
+
+    expect(store.isLoading).toBeFalsy();
+    expect(store.requestTime).not.toBe(-1);
+  });
+
+  it("get request failed", async () => {
+    const data = "some-failed-data";
+    const status = 400;
+
+    const spy = vi.spyOn(axios, "get").mockImplementation(async () => {
+      throw {
+        response: {
+          data,
+          status,
+        },
+      };
+    });
+
+    const request: MyNotActiveRequest = {
+      method: Methods.GET,
+      url: "aaa.com",
+    };
+
+    store.setNotActiveRequest(request);
+
+    await store.getRequest();
+
+    expect(spy).toHaveBeenCalled();
+    expect(store.error).toBe(data);
+
+    expect(store.requestResult).toBeNull();
+    expect(store.statusCode).toBe(status);
+
+    expect(store.isLoading).toBeFalsy();
+    expect(store.requestTime).not.toBe(-1);
   });
 });

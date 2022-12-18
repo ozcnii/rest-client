@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { defineStore } from "pinia";
 import { fetchData, saveActiveRequest, saveNotActiveRequest } from "@/utils";
 import { initialState } from "./data";
@@ -60,14 +60,13 @@ export const useRequestStore = defineStore("request", {
 
         this.setRequestResult(result.data ?? "NO DATA");
         this.setStatusCode(result.status);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          this.setStatusCode(error.response?.status ?? -1);
+      } catch (e) {
+        const error = e as AxiosError;
+        this.setStatusCode(error.response?.status ?? -1);
 
-          const errorRaw =
-            error.response?.data || error.response?.statusText || error.message;
-          this.setError(errorRaw);
-        }
+        const errorRaw =
+          error.response?.data || error.response?.statusText || error.message;
+        this.setError(errorRaw);
       } finally {
         this.setLoading(false);
         this.setRequestTime(Date.now() - start);
