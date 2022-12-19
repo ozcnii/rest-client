@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { defineStore } from "pinia";
 import { fetchData, saveActiveRequest, saveNotActiveRequest } from "@/utils";
 import { initialState } from "./data";

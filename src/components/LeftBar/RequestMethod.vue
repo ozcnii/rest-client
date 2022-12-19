@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Methods } from "@/store/request";
+import { TMethods } from "@/store/request";
 import { methodColors } from "@/utils";
 
 interface Props {
-  method: Methods;
+  method: TMethods;
 }
 
 const props = defineProps<Props>();

@@ -1,9 +1,9 @@
-import { Methods } from "@/store/request";
+import { TMethods } from "@/store/request";
 import { methodColors } from "@/utils";
 
-export const requestMethodResults: { method: Methods; color: string }[] = [];
+export const requestMethodResults: { method: TMethods; color: string }[] = [];
 
 for (const key in methodColors) {
-  const method = key as Methods;
+  const method = key as TMethods;
   requestMethodResults.push({ method, color: methodColors[method] });
 }

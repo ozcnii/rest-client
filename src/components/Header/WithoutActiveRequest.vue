@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 
-import { useRequestStore, Methods, MyNotActiveRequest } from "@/store/request";
+import { useRequestStore, Methods, MyNotActiveRequest, TMethods } from "@/store/request";
 
 import Button from "@/components/UI/Button.vue";
 import Input from "@/components/UI/Input.vue";
@@ -56,7 +56,7 @@ function closeModal() {
   isShowModal.value = false;
 }
 
-function setMethod(value: Methods) {
+function setMethod(value: TMethods) {
   method.value = value;
 }
 

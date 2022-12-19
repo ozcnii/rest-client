@@ -39,7 +39,7 @@
 import { ref } from "vue";
 
 import { useFoldersStore } from "@/store/folders";
-import { useRequestStore, Methods, MyRequest } from "@/store/request";
+import { useRequestStore, Methods, MyRequest, TMethods } from "@/store/request";
 
 import Button from "@/components/UI/Button.vue";
 import Input from "@/components/UI/Input.vue";
@@ -65,7 +65,7 @@ function saveRequest() {
   foldersStore.saveRequest(newRequest);
 }
 
-function setMethod(value: Methods) {
+function setMethod(value: TMethods) {
   method.value = value;
 }
 

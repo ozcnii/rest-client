@@ -21,22 +21,22 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
-import { Methods } from "@/store/request";
+import { Methods, TMethods } from "@/store/request";
 
 interface Props {
-  options: Methods[];
-  default?: Methods;
+  options: TMethods[];
+  default?: TMethods;
 }
 
 interface Emits {
-  (e: "input", value: Methods): void;
+  (e: "input", value: TMethods): void;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const open = ref(false);
-const selected = ref<Methods | null>(
+const selected = ref<TMethods | null>(
   props.default ? props.default : props.options.length > 0 ? props.options[0] : null
 );
 

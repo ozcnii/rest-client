@@ -1,10 +1,12 @@
-export enum Methods {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  PATCH = "PATCH",
-  DELETE = "DELETE",
-}
+export const Methods = {
+  GET: "GET",
+  POST: "POST",
+  PUT: "PUT",
+  PATCH: "PATCH",
+  DELETE: "DELETE",
+} as const;
+
+export type TMethods = keyof typeof Methods;
 
 export interface MyHeader {
   key: string;
@@ -16,7 +18,7 @@ export interface MyParam extends MyHeader {}
 
 export interface MyRequest {
   id: string;
-  method: Methods;
+  method: TMethods;
   name: string;
   url: string;
   folder_id: string;
@@ -27,7 +29,7 @@ export interface MyRequest {
 
 export interface MyNotActiveRequest {
   id?: string;
-  method: Methods;
+  method: TMethods;
   name?: string;
   url: string;
   folder_id?: string;
@@ -37,9 +39,9 @@ export interface MyNotActiveRequest {
 }
 
 export interface ReqeuestState {
-  method: Methods;
+  method: TMethods;
 
-  httpMethods: [Methods.GET, Methods.POST, Methods.PUT, Methods.PATCH, Methods.DELETE];
+  httpMethods: TMethods[];
 
   requestResult: null | any;
   requestTime: number;
