@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 import { useRequestStore, Methods, MyRequest, MyNotActiveRequest } from "@/store/request";
-import axios, { AxiosError } from "axios";
 
 describe("useRequestStore", () => {
   let store: ReturnType<typeof useRequestStore>;

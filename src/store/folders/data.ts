@@ -30,6 +30,7 @@ export const initialState: FoldersState = {
           url: "https://jsonplaceholder.typicode.com/users?_limit=2",
           folder_id: "1",
           body: '{"data": 12333}',
+          params: [{ id: "111_1", key: "key", value: "value" }],
         },
       ],
     },

@@ -23,88 +23,85 @@
   </div>
 </template>
 
-<script>
-import Input from "@/components/UI/Input.vue";
-import { mapGetters, mapMutations } from "vuex";
-import { defineComponent } from "vue";
-import Button from "@/components/UI/Button.vue";
-import { Mutations } from "../../../store.old/mutations";
+<script lang="ts" setup>
+import { onMounted, ref, watch } from "vue";
 import { nanoid } from "nanoid";
 
-export default defineComponent({
-  components: {
-    Input,
-    Button,
+import { useFoldersStore } from "@/store/folders";
+import { MyNotActiveRequest, MyParam, MyRequest, useRequestStore } from "@/store/request";
+
+import Input from "@/components/UI/Input.vue";
+import Button from "@/components/UI/Button.vue";
+
+const foldersStore = useFoldersStore();
+const requestStore = useRequestStore();
+
+const params = ref<MyParam[]>([]);
+
+onMounted(() => {
+  params.value =
+    requestStore.activeRequest?.params || requestStore.notActiveRequest?.params || [];
+});
+
+function addQueryParam() {
+  params.value.push({
+    id: nanoid(),
+    value: "",
+    key: "",
+  });
+}
+
+function deleteQueryParam(id: string) {
+  params.value = params.value.filter((param) => param.id !== id);
+}
+
+function saveParams() {
+  if (!requestStore.activeRequest) {
+    return;
+  }
+
+  const newRequest: MyRequest = {
+    ...requestStore.activeRequest,
+    params: params.value,
+  };
+
+  foldersStore.saveRequest(newRequest);
+}
+
+function saveNotActiveRequestParams() {
+  if (!requestStore.notActiveRequest) {
+    return;
+  }
+
+  const newRequest: MyNotActiveRequest = {
+    ...requestStore.notActiveRequest,
+    params: params.value,
+  };
+
+  requestStore.setNotActiveRequest(newRequest);
+}
+
+watch(
+  params,
+  () => {
+    if (requestStore.activeRequest) {
+      saveParams();
+    }
+
+    const notActiveRequestParams = JSON.stringify(requestStore.notActiveRequest?.params);
+    const currentParams = JSON.stringify(params.value);
+
+    if (notActiveRequestParams !== currentParams) {
+      saveNotActiveRequestParams();
+    }
   },
+  {
+    deep: true,
+  }
+);
 
-  mounted() {
-    const params = this.getActiveRequest?.params;
-    if (params) this.params = params;
-    else this.params = this.getNotActiveRequest?.params || [];
-  },
-
-  data() {
-    return {
-      params: [],
-    };
-  },
-
-  methods: {
-    addQueryParam() {
-      this.params.push({
-        key: "",
-        value: "",
-        id: nanoid(),
-      });
-    },
-
-    deleteQueryParam(id) {
-      this.params = this.params.filter((param) => param.id !== id);
-    },
-
-    saveParams() {
-      const newRequest = {
-        ...this.getActiveRequest,
-        params: this.params,
-      };
-      this[Mutations.SAVE_REQUEST](newRequest);
-      this[Mutations.SET_ACTIVE_REQUEST](newRequest);
-    },
-
-    saveNotActiveRequestParams() {
-      const request = { ...this.getNotActiveRequest, params: this.params };
-      this[Mutations.SET_NOT_ACTIVE_REQUEST](request);
-    },
-
-    ...mapMutations([
-      `${Mutations.SAVE_REQUEST}`,
-      `${Mutations.SET_ACTIVE_REQUEST}`,
-      `${Mutations.SET_NOT_ACTIVE_REQUEST}`,
-    ]),
-  },
-
-  watch: {
-    params: {
-      handler() {
-        if (this.getActiveRequest) this.saveParams();
-        else this.saveNotActiveRequestParams();
-      },
-      deep: true,
-    },
-
-    getActiveRequest: {
-      handler(value) {
-        const params = value?.params;
-        if (params) this.params = params;
-        else this.params = [];
-      },
-      deep: true,
-    },
-  },
-
-  computed: {
-    ...mapGetters(["getActiveRequest", "getNotActiveRequest"]),
-  },
+requestStore.$subscribe((_, state) => {
+  params.value = state.activeRequest?.params || [];
 });
 </script>
 

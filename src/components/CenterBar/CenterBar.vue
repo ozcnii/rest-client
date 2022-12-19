@@ -23,29 +23,21 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  data() {
-    return {
-      options: [
-        {
-          name: "Body",
-          link: "/body",
-        },
-        {
-          name: "Params",
-          link: "/params",
-        },
-        {
-          name: "Headers",
-          link: "/headers",
-        },
-      ],
-    };
+<script lang="ts" setup>
+const options = [
+  {
+    name: "Body",
+    link: "/body",
   },
-});
+  {
+    name: "Params",
+    link: "/params",
+  },
+  {
+    name: "Headers",
+    link: "/headers",
+  },
+];
 </script>
 
 <style scoped>
