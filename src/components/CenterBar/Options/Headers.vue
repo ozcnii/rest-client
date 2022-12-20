@@ -23,88 +23,86 @@
   </div>
 </template>
 
-<script>
-import Input from "@/components/UI/Input.vue";
-import { mapGetters, mapMutations } from "vuex";
-import { defineComponent } from "vue";
-import Button from "@/components/UI/Button.vue";
-import { Mutations } from "../../../store.old/mutations";
+<script lang="ts" setup>
+import { onMounted, ref, watch } from "vue";
 import { nanoid } from "nanoid";
 
-export default defineComponent({
-  components: {
-    Input,
-    Button,
+import { useFoldersStore } from "@/store/folders";
+import { MyHeader, MyNotActiveRequest, useRequestStore } from "@/store/request";
+
+import Input from "@/components/UI/Input.vue";
+import Button from "@/components/UI/Button.vue";
+
+const foldersStore = useFoldersStore();
+const requestStore = useRequestStore();
+
+const headers = ref<MyHeader[]>([]);
+
+onMounted(() => {
+  headers.value =
+    requestStore.activeRequest?.headers || requestStore.notActiveRequest?.headers || [];
+});
+
+function addHeader() {
+  headers.value.push({
+    key: "",
+    value: "",
+    id: nanoid(),
+  });
+}
+
+function deleteHeader(id: string) {
+  headers.value = headers.value.filter((header) => header.id !== id);
+}
+
+function saveHeaders() {
+  if (!requestStore.activeRequest) {
+    return;
+  }
+
+  const newRequest = {
+    ...requestStore.activeRequest,
+    headers: headers.value,
+  };
+
+  foldersStore.saveRequest(newRequest);
+  requestStore.setActiveRequest(newRequest);
+}
+
+function saveNotActiveRequestHeaders() {
+  if (!requestStore.notActiveRequest) {
+    return;
+  }
+
+  const newRequest: MyNotActiveRequest = {
+    ...requestStore.notActiveRequest,
+    headers: headers.value,
+  };
+
+  requestStore.setNotActiveRequest(newRequest);
+}
+
+watch(
+  headers,
+  () => {
+    if (requestStore.activeRequest) {
+      saveHeaders();
+    }
+
+    const notActiveRequestHeaders = JSON.stringify(requestStore.notActiveRequest?.body);
+    const currentHeaders = JSON.stringify(headers.value);
+
+    if (notActiveRequestHeaders !== currentHeaders) {
+      saveNotActiveRequestHeaders();
+    }
   },
+  {
+    deep: true,
+  }
+);
 
-  mounted() {
-    const headers = this.getActiveRequest?.headers;
-    if (headers) this.headers = headers;
-    else this.headers = this.getNotActiveRequest?.headers || [];
-  },
-
-  data() {
-    return {
-      headers: [],
-    };
-  },
-
-  methods: {
-    addHeader() {
-      this.headers.push({
-        key: "",
-        value: "",
-        id: nanoid(),
-      });
-    },
-
-    deleteHeader(id) {
-      this.headers = this.headers.filter((header) => header.id !== id);
-    },
-
-    saveHeaders() {
-      const newRequest = {
-        ...this.getActiveRequest,
-        headers: this.headers,
-      };
-      this[Mutations.SAVE_REQUEST](newRequest);
-      this[Mutations.SET_ACTIVE_REQUEST](newRequest);
-    },
-
-    saveNotActiveRequestHeaders() {
-      const request = { ...this.getNotActiveRequest, headers: this.headers };
-      this[Mutations.SET_NOT_ACTIVE_REQUEST](request);
-    },
-
-    ...mapMutations([
-      `${Mutations.SAVE_REQUEST}`,
-      `${Mutations.SET_ACTIVE_REQUEST}`,
-      `${Mutations.SET_NOT_ACTIVE_REQUEST}`,
-    ]),
-  },
-
-  watch: {
-    headers: {
-      handler() {
-        if (this.getActiveRequest) this.saveHeaders();
-        else this.saveNotActiveRequestHeaders();
-      },
-      deep: true,
-    },
-
-    getActiveRequest: {
-      handler(value) {
-        const headers = value?.headers;
-        if (headers) this.headers = headers;
-        else this.headers = [];
-      },
-      deep: true,
-    },
-  },
-
-  computed: {
-    ...mapGetters(["getActiveRequest", "getNotActiveRequest"]),
-  },
+requestStore.$subscribe((_, state) => {
+  headers.value = state.activeRequest?.headers || [];
 });
 </script>
 

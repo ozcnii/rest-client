@@ -92,8 +92,6 @@ watch(
 );
 
 requestStore.$subscribe((_, state) => {
-  // params.value = state.activeRequest?.params || [];
-
   const requestBody = state.activeRequest?.body;
 
   if (!requestBody) {
